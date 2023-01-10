@@ -6,9 +6,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  BeforeUpdate,
+  BeforeInsert,
 } from "typeorm";
 import { Question } from "./question.entity";
 import { Answer } from "./answer.entity";
+import { hashSync } from "bcryptjs";
 
 @Entity("users")
 export class User {
@@ -41,6 +44,12 @@ export class User {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @BeforeUpdate()
+  @BeforeInsert()
+  hashPassword() {
+    this.password = hashSync(this.password, 10);
+  }
 
   @OneToMany(() => Answer, (answer) => answer.user)
   answer: Answer[];
