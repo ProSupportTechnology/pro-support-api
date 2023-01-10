@@ -12,7 +12,7 @@ export const deleteQuestionsService = async (id: string): Promise<number> => {
   }
 
   await questionsRepository.softRemove(question);
-  await questionsRepository.save({ ...question, status: "removed" });
+  await questionsRepository.save({ ...question });
 
   return 204;
 };
