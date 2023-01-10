@@ -16,3 +16,10 @@ export const listQuestionsController = async (req: Request, res: Response) => {
   const questionsList: Promise<iQuestionResponse[]> = listQuestionsService();
   return res.status(200).send(questionsList);
 };
+
+export const deleteQuestionsController = async (
+  req: Request,
+  res: Response
+) => {
+  return res.status(204).send({});
+};
