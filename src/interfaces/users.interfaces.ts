@@ -5,13 +5,26 @@ export interface iUserRequest {
   isAdm?: boolean;
 }
 
+export interface iUserUpdate {
+  email?: string;
+  password?: string;
+  name?: string;
+  bio?: string;
+  image?: string;
+}
+
+export interface iUserLogin {
+  email: string;
+  password: string;
+}
+
 export interface iUserResponse {
   id: string;
   email: string;
   name: string;
   bio: string;
-  isAdm?: boolean;
+  isAdm: boolean;
   image: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
