@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { iQuestionRequest } from "../interfaces/questions.interfaces";
 import { iQuestionResponse } from "../interfaces/questions.interfaces";
 import { createQuestionService } from "../services/questions/create.service";
+import { deleteQuestionsService } from "../services/questions/deleteQuestions.service";
 import { listQuestionsService } from "../services/questions/listQuestions.service";
 
 export const createQuestionController = async (req: Request, res: Response) => {
@@ -21,5 +22,7 @@ export const deleteQuestionsController = async (
   req: Request,
   res: Response
 ) => {
+  const questionId: string = req.params.id;
+  const deletedQuestion = deleteQuestionsService(questionId);
   return res.status(204).send({});
 };
