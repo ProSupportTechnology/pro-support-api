@@ -8,6 +8,7 @@ import {
   ManyToOne,
   OneToMany,
 } from "typeorm";
+import { string } from "yup";
 import { Answer } from "./answer.entity";
 import { User } from "./user.entity";
 
