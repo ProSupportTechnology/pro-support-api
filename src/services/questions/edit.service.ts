@@ -1,6 +1,8 @@
 import { AppDataSource } from "../../data-source";
 import { Question } from "../../entities/question.entity";
+import { AppError } from "../../errors";
 import { iQuestionRequest } from "../../interfaces/questions.interfaces";
+import { questionSchema } from "../../schemas/question.schemas";
 
 export const editQuestionService = async (
   body: iQuestionRequest,
@@ -8,15 +10,18 @@ export const editQuestionService = async (
 ): Promise<any> => {
   const questionRepo = AppDataSource.getRepository(Question);
 
-  const question = await questionRepo.findOneBy({ id: id });
+  try {
+    const question = await questionRepo.findOneBy({ id: id });
 
-  //   if(!question) {
+    const updatedQuestion = questionRepo.create({
+      ...question,
+      ...body,
+    });
 
-  //   }
+    await questionRepo.save(updatedQuestion);
 
-  console.log(question);
-
-  console.log(body, "Teste Teste", id);
-
-  return "question";
+    return updatedQuestion;
+  } catch (error) {
+    throw new AppError("This id is not in the database", 404);
+  }
 };

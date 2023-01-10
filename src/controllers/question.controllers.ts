@@ -7,8 +7,9 @@ import { listQuestionsService } from "../services/questions/listQuestions.servic
 
 export const createQuestionController = async (req: Request, res: Response) => {
   const questionData: iQuestionRequest = req.body;
+  const token = req.headers.authorization;
 
-  const newQuestion = await createQuestionService(questionData);
+  const newQuestion = await createQuestionService(questionData, token);
 
   return res.status(201).json(newQuestion);
 };

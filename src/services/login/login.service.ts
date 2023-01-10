@@ -31,6 +31,7 @@ const loginService = async ({
   const token = jwt.sign(
     {
       isAdm: user.isAdm,
+      id: user.id,
     },
     process.env.SECRET_KEY!,
     {
