@@ -6,7 +6,10 @@ import { AppError } from "../../errors";
 import { User } from "../../entities/user.entity";
 import { AppDataSource } from "../../data-source";
 
-const loginService = async ({ email, password }: IUserLogin) => {
+const loginService = async ({
+  email,
+  password,
+}: IUserLogin): Promise<string> => {
   const userRepository = AppDataSource.getRepository(User);
 
   console.log(hashSync(password, 10));
