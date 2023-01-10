@@ -23,7 +23,7 @@ export const editChangedController = async (req: Request, res: Response) => {
 };
 
 export const listQuestionsController = async (req: Request, res: Response) => {
-  const questionsList: Promise<iQuestionRequest[]> = listQuestionsService();
+  const questionsList: iQuestionRequest[] = await listQuestionsService();
   return res.status(200).send(questionsList);
 };
 
