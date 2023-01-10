@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { iAnswerResponse } from "../interfaces/answers.interfaces";
+import { iAnswerResponse, iAnswerRequest } from "../interfaces/answers.interfaces";
 
 export const answareResponseSchema: SchemaOf<iAnswerResponse> = yup.object().shape({
   id: yup.string(),
@@ -12,3 +12,9 @@ export const answareResponseSchema: SchemaOf<iAnswerResponse> = yup.object().sha
 });
 
 export const listAnswareResponseSchema: SchemaOf<iAnswerResponse[]> = yup.array(answareResponseSchema);
+
+export const bodyAnswerSchema: SchemaOf<iAnswerRequest> = yup.object().shape({
+  description: yup.string().required(),
+  questionId: yup.string().required(),
+  userId: yup.string().required(),
+});
