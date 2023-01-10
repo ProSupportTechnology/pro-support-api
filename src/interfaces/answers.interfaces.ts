@@ -3,6 +3,8 @@ import { User } from "../entities/user.entity";
 
 export interface iAnswerRequest {
   description: string;
+  questionId: string;
+  userId: string;
 }
 
 export interface iAnswerResponse {
