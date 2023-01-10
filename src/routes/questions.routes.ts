@@ -11,4 +11,4 @@ export const questionsRoutes = Router();
 questionsRoutes.post("", createQuestionController);
 questionsRoutes.patch("/:id", editChangedController);
 questionsRoutes.get("", listQuestionsController);
-questionsRoutes.delete("", deleteQuestionsController);
+questionsRoutes.delete("/:id", deleteQuestionsController);
