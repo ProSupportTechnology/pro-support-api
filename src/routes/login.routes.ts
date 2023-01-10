@@ -1,3 +1,6 @@
-import { Router } from "express"
+import { Router } from "express";
+import { loginController } from "../controllers/login.controllers";
 
-export const loginRoutes = Router()
+export const loginRoutes = Router();
+
+loginRoutes.post("", loginController);
