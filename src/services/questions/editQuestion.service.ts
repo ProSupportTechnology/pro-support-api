@@ -1,13 +1,15 @@
 import { AppDataSource } from "../../data-source";
 import { Question } from "../../entities/question.entity";
 import { AppError } from "../../errors";
-import { iQuestionRequest } from "../../interfaces/questions.interfaces";
-import { questionSchema } from "../../schemas/question.schemas";
+import {
+  iQuestionRequest,
+  iQuestionResponse,
+} from "../../interfaces/questions.interfaces";
 
 export const editQuestionService = async (
   body: iQuestionRequest,
   id: string
-): Promise<any> => {
+): Promise<iQuestionResponse> => {
   const questionRepo = AppDataSource.getRepository(Question);
 
   try {
