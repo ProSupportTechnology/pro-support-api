@@ -22,8 +22,6 @@ export const createAnswerResponseSchema: SchemaOf<iAnswerCreateResponse> = yup
   .shape({
     id: yup.string().required(),
     description: yup.string().required(),
-    createdAt: yup.string().required(),
-    updatedAt: yup.string().required(),
     userId: yup.string().required(),
     questionId: yup.string().required(),
   });

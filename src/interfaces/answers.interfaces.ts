@@ -19,8 +19,6 @@ export interface iAnswerResponse {
 export interface iAnswerCreateResponse {
   id: string;
   description: string;
-  createdAt: string;
-  updatedAt: string;
   userId: string;
   questionId: string;
 }
