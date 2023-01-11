@@ -1,12 +1,9 @@
 import { Request, Response, NextFunction } from "express";
+import { iJWTDecoded } from "../interfaces/jwt.interfaces";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const ensureAuthMiddleware = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const ensureAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   let token = req.headers.authorization;
 
   if (!token) {
@@ -17,7 +14,7 @@ const ensureAuthMiddleware = async (
 
   token = token.split(" ")[1];
 
-  jwt.verify(token, process.env.SECRET_KEY as string, (error, decoded: any) => {
+  jwt.verify(token, process.env.SECRET_KEY as string, (error, decoded: iJWTDecoded) => {
     if (error) {
       return res.status(401).json({
         message: error.message,
