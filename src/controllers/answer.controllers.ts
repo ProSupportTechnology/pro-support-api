@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { listAnswersService } from "../services/answers/list.service";
 import { iAnswerRequest } from "../interfaces/answers.interfaces";
 import { createAnswerService } from "../services/answers/createAnswer.service";
+import { editAnswerService } from "../services/answers/edit.service";
 
 export const listAnswersController = async (req: Request, res: Response) => {
   const questions = await listAnswersService();
@@ -13,4 +14,11 @@ export const createAnswerController = async (req: Request, res: Response) => {
   const data = await createAnswerService(answerBody);
 
   return res.status(201).json(data);
+};
+
+export const editAnswerController = async (req: Request, res: Response) => {
+  const body: iAnswerRequest = req.body;
+  const answerId: string = req.params.id;
+  const question = await editAnswerService(body, answerId);
+  return res.json(question);
 };
