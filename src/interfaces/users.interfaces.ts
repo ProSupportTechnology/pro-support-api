@@ -24,7 +24,7 @@ export interface iUserResponse {
   name: string;
   bio: string;
   isAdm: boolean;
-  image: string;
+  image?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -32,4 +32,13 @@ export interface iUserResponse {
 export interface IUserLogin {
   email: string;
   password: string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  isAdm?: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }

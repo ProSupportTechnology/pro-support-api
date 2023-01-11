@@ -54,5 +54,5 @@ export const deleteUserAccountController = async (
   response: Response
 ) => {
   await deleteUserAccountService(request.params.id);
-  return response.status(204);
+  return response.status(204).json({});
 };

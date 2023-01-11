@@ -19,9 +19,8 @@ const userWithoutPasswordSchema: SchemaOf<iUserResponse> = yup.object().shape({
   name: yup.string().notRequired(),
   email: yup.string().email().notRequired(),
   isAdm: yup.boolean().notRequired(),
-  isActive: yup.boolean().notRequired(),
-  bio: yup.string().notRequired(),
-  image: yup.string().notRequired(),
+  bio: yup.string().notRequired().nullable(),
+  image: yup.string().notRequired().nullable(),
   createdAt: yup.date().notRequired(),
   updatedAt: yup.date().notRequired(),
 });

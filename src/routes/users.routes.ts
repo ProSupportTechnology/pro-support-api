@@ -10,6 +10,7 @@ import {
   retrieveUserProfileController,
   updateUserProfileController,
 } from "../controllers/user.controllers";
+import ensureAuthMiddleware from "../middlewares/ensure.authorization.middleware";
 
 //Middlewares:
 
@@ -25,7 +26,7 @@ usersRoutes.get("/:id", retrieveUserProfileController);
 usersRoutes.get("", listUsersController);
 
 //Update user account:
-usersRoutes.patch("/:id", updateUserProfileController);
+usersRoutes.patch("/:id", ensureAuthMiddleware, updateUserProfileController);
 
 //Delete user account:
 usersRoutes.delete("/:id", deleteUserAccountController);
