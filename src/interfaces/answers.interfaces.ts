@@ -1,5 +1,5 @@
 import { Question } from "../entities/question.entity";
-import { User } from "../entities/user.entity";
+import { iUserResponse } from "./users.interfaces";
 
 export interface iAnswerRequest {
   description: string;
@@ -12,6 +12,6 @@ export interface iAnswerResponse {
   description: string;
   createdAt: string;
   updatedAt: string;
-  user: User;
+  user: iUserResponse;
   question: Question;
 }
