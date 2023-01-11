@@ -10,7 +10,7 @@ export const ensureInputIsUuidMiddleware =
         throw new AppError("Not found.", 404);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error, "oi");
       if (error.statusCode) {
         throw new AppError(error.message.message, error.statusCode);
       }
@@ -21,5 +21,6 @@ export const ensureInputIsUuidMiddleware =
         );
       }
     }
+
     return next();
   };

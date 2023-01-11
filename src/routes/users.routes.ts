@@ -19,7 +19,12 @@ usersRoutes.get("/:id", retrieveUserProfileController);
 
 usersRoutes.get("", listUsersController);
 
-usersRoutes.patch("/:id", ensureAuthMiddleware, updateUserProfileController);
+usersRoutes.patch(
+  "/:id",
+  ensureAuthMiddleware,
+  ensureInputIsUuidMiddleware(User),
+  updateUserProfileController
+);
 
 usersRoutes.delete(
   "/:id",
