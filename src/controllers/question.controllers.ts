@@ -20,12 +20,12 @@ export const editQuestionController = async (req: Request, res: Response) => {
 
   const questionChanged = await editQuestionService(changedData, questionId);
 
-  return res.status(200).json(questionChanged);
+  return res.json(questionChanged);
 };
 
 export const listQuestionsController = async (req: Request, res: Response) => {
   const questionsList: iQuestionRequest[] = await listQuestionsService();
-  return res.status(200).send(questionsList);
+  return res.json(questionsList);
 };
 
 export const deleteQuestionsController = async (
@@ -34,5 +34,5 @@ export const deleteQuestionsController = async (
 ) => {
   const questionId: string = req.params.id;
   const status = await deleteQuestionsService(questionId);
-  return res.status(status).send({});
+  return res.status(status).json({});
 };
