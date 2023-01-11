@@ -5,10 +5,11 @@ import {
   editAnswerController,
   deleteAnswerController,
 } from "../controllers/answer.controllers";
+import ensureAuthMiddleware from "../middlewares/ensure.authorization.middleware";
 
 export const answersRoutes = Router();
 
-answersRoutes.get("", listAnswersController);
-answersRoutes.post("", createAnswerController);
-answersRoutes.patch("/:id", editAnswerController);
-answersRoutes.delete("/:id", deleteAnswerController);
+answersRoutes.get("", ensureAuthMiddleware, listAnswersController);
+answersRoutes.post("", ensureAuthMiddleware, createAnswerController);
+answersRoutes.patch("/:id", ensureAuthMiddleware, editAnswerController);
+answersRoutes.delete("/:id", ensureAuthMiddleware, deleteAnswerController);
