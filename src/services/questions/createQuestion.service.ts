@@ -14,11 +14,11 @@ export const createQuestionService = async (
 
   let tokenUser = token.split(" ")[1];
 
-  let idUser = "idTest";
+  // let idUser = "idTest";
 
-  Jwt.verify(tokenUser, process.env.SECRET_KEY, (error, decoded: any) => {
-    idUser += decoded.id;
-  });
+  // Jwt.verify(tokenUser, process.env.SECRET_KEY, (error, decoded: any) => {
+  //   idUser += decoded.id;
+  // });
 
   const question = questionRepo.create(body);
 
@@ -26,7 +26,7 @@ export const createQuestionService = async (
 
   const response = {
     ...question,
-    userId: idUser,
+    // userId: idUser,
   };
 
   return response;

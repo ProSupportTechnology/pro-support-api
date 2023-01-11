@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { iQuestionRequest } from "../interfaces/questions.interfaces";
-import { createQuestionService } from "../services/questions/create.service";
+import { createQuestionService } from "../services/questions/createQuestion.service";
 import { deleteQuestionsService } from "../services/questions/deleteQuestions.service";
-import { editQuestionService } from "../services/questions/edit.service";
+import { editQuestionService } from "../services/questions/editQuestion.service";
 import { listQuestionsService } from "../services/questions/listQuestions.service";
 
 export const createQuestionController = async (req: Request, res: Response) => {
@@ -14,7 +14,7 @@ export const createQuestionController = async (req: Request, res: Response) => {
   return res.status(201).json(newQuestion);
 };
 
-export const editChangedController = async (req: Request, res: Response) => {
+export const editQuestionController = async (req: Request, res: Response) => {
   const changedData: iQuestionRequest = req.body;
   const questionId = req.params.id;
 
