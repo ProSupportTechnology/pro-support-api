@@ -38,11 +38,7 @@ export const updateUserProfileController = async (
   response: Response
 ) => {
   const userData: iUserUpdate = request.body;
-  const updatedUser = await updateUserService(
-    request.user.id,
-    request.params.id,
-    userData
-  );
+  const updatedUser = await updateUserService(request.params.id, userData);
   return response.status(200).json(updatedUser);
 };
 

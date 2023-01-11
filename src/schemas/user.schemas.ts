@@ -5,6 +5,7 @@ import {
   iUserLogin,
   iUserUpdate,
   iUserResponse,
+  iUserUpdateReturn,
 } from "../interfaces/users.interfaces";
 
 const userRequestSchema: SchemaOf<iUserRequest> = yup.object().shape({
@@ -38,6 +39,15 @@ const userUpdateSchema: SchemaOf<iUserUpdate> = yup.object().shape({
   image: yup.string().notRequired(),
 });
 
+const userUpdateReturnSchema: SchemaOf<iUserUpdateReturn> = yup.object().shape({
+  email: yup.string(),
+  id: yup.string(),
+  name: yup.string(),
+  password: yup.string(),
+  bio: yup.string().nullable(),
+  image: yup.string().nullable(),
+});
+
 const listAllUsersSchema: SchemaOf<iUserResponse[]> = yup.array(
   userWithoutPasswordSchema
 );
@@ -48,4 +58,5 @@ export {
   userLoginSchema,
   userUpdateSchema,
   listAllUsersSchema,
+  userUpdateReturnSchema,
 };
