@@ -9,7 +9,9 @@ import {
   retrieveUserProfileController,
   updateUserProfileController,
 } from "../controllers/user.controllers";
+import { User } from "../entities/user.entity";
 import ensureAuthMiddleware from "../middlewares/ensure.authorization.middleware";
+import { ensureInputIsUuidMiddleware } from "../middlewares/ensureInputIsUuid.middleware";
 
 usersRoutes.post("", registerUserController);
 
@@ -19,4 +21,9 @@ usersRoutes.get("", listUsersController);
 
 usersRoutes.patch("/:id", ensureAuthMiddleware, updateUserProfileController);
 
-usersRoutes.delete("/:id", deleteUserAccountController);
+usersRoutes.delete(
+  "/:id",
+  ensureAuthMiddleware,
+  ensureInputIsUuidMiddleware(User),
+  deleteUserAccountController
+);
