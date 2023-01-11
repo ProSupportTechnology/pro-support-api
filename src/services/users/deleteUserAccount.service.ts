@@ -17,10 +17,6 @@ const deleteUserService = async (paramsUserId: string) => {
 
   await userRepository.softRemove(userToDelete);
 
-  // const deletedUser = await userRepository.save({
-  //   ...result,
-  // });
-
   return {};
 };
 
