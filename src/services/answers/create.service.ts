@@ -46,9 +46,8 @@ export const createAnswerService = async (
 
   await answersRepository.save(answer);
 
-  const response = await answersRepository.findOneBy({ id: answer.id });
   const validatedResponse = await createAnswerResponseSchema.validate(
-    { ...response, userId, questionId },
+    { ...answer, userId, questionId },
     {
       stripUnknown: true,
     }
