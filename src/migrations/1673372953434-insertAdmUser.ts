@@ -8,6 +8,8 @@ export class insertAdmUser1673372953434 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DELETE FROM users WHERE email = 'admin@prosupport.com';`);
+    await queryRunner.query(
+      `DELETE FROM users WHERE email = 'admin@prosupport.com';`
+    );
   }
 }
