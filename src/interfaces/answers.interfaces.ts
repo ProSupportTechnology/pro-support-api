@@ -15,10 +15,3 @@ export interface iAnswerResponse {
   user: User;
   question: Question;
 }
-
-export interface iAnswerCreateResponse {
-  id: string;
-  description: string;
-  userId: string;
-  questionId: string;
-}

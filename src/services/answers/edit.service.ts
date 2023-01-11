@@ -7,7 +7,7 @@ import { answareResponseSchema } from "../../schemas/answer.schemas";
 export const editAnswerService = async (body: iAnswerRequest, answerId: string) => {
   const answerRepo = AppDataSource.getRepository(Answer);
 
-  let answer = await answerRepo.findOneByOrFail({ id: answerId }).catch((err) => {
+  let answer = await answerRepo.findOneByOrFail({ id: answerId }).catch(() => {
     throw new AppError("Answer not found", 404);
   });
 

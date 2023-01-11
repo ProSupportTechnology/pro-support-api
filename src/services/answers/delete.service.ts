@@ -4,7 +4,7 @@ import { AppError } from "../../errors";
 
 export const deleteAnswerService = async (answerId: string): Promise<Object> => {
   const answerRepo = AppDataSource.getRepository(Answer);
-  const answer = await answerRepo.findOneByOrFail({ id: answerId }).catch((err) => {
+  const answer = await answerRepo.findOneByOrFail({ id: answerId }).catch(() => {
     throw new AppError("Answer not found", 404);
   });
 
