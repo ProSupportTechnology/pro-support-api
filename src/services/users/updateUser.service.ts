@@ -1,17 +1,38 @@
 import { AppDataSource } from "../../data-source";
-import { iUserResponse, iUserUpdate } from "../../interfaces/users.interfaces";
+import { iUserUpdate } from "../../interfaces/users.interfaces";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
+import { userUpdateReturnSchema } from "../../schemas/user.schemas";
 
 const updateUserService = async (
-  loggedUserId: string,
   paramsUserId: string,
   userData: iUserUpdate
-): Promise<iUserResponse> => {
+): Promise<iUserUpdate> => {
   const userRepository = AppDataSource.getRepository(User);
-  const userToUpdate = userRepository.findOneBy({});
+  const userToUpdate = await userRepository.findOneBy({
+    id: paramsUserId,
+  });
 
-  return userToUpdate;
+  console.log(userData);
+
+  if (!userToUpdate) {
+    throw new AppError("User not found with this id", 404);
+  }
+
+  const updatedUser = userRepository.create({
+    ...userToUpdate,
+    ...userData,
+  });
+
+  await userRepository.save(updatedUser);
+
+  console.log(updatedUser);
+
+  const userUpdatedReturn = await userUpdateReturnSchema.validate(updatedUser, {
+    stripUnknown: true,
+  });
+
+  return userUpdatedReturn;
 };
 
 export default updateUserService;

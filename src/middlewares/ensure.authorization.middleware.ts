@@ -16,6 +16,7 @@ const ensureAuthMiddleware = async (req: Request, res: Response, next: NextFunct
 
   jwt.verify(token, process.env.SECRET_KEY as string, (error, decoded: iJWTDecoded) => {
     if (error) {
+      console.log(error);
       return res.status(401).json({
         message: error.message,
       });

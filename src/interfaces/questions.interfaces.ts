@@ -11,7 +11,7 @@ export interface iQuestionResponse {
   title: string;
   description: string;
   tech: string;
-  createdAt: string;
-  updatedAt: string;
-  user: User;
+  createdAt: Date;
+  updatedAt: Date;
+  user: User | string;
 }

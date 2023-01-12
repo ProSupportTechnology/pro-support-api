@@ -13,6 +13,14 @@ export interface iUserUpdate {
   image?: string;
 }
 
+export interface iUserUpdateReturn {
+  email: string;
+  id: string;
+  name: string;
+  bio: string;
+  image: string;
+}
+
 export interface iUserLogin {
   email: string;
   password: string;
