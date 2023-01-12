@@ -1,7 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
-import { iUserRequest } from "../../interfaces/users.interfaces";
 
 const deleteUserService = async (paramsUserId: string) => {
   const userRepository = AppDataSource.getRepository(User);

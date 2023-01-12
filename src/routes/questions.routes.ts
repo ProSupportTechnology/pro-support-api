@@ -11,16 +11,6 @@ import { ensureInputIsUuidMiddleware } from "../middlewares/ensureInputIsUuid.mi
 export const questionsRoutes = Router();
 
 questionsRoutes.post("", ensureAuthMiddleware, createQuestionController);
-questionsRoutes.patch(
-  "/:id",
-  ensureInputIsUuidMiddleware(),
-  ensureAuthMiddleware,
-  editQuestionController
-);
+questionsRoutes.patch("/:id", ensureInputIsUuidMiddleware, ensureAuthMiddleware, editQuestionController);
 questionsRoutes.get("", ensureAuthMiddleware, listQuestionsController);
-questionsRoutes.delete(
-  "/:id",
-  ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware(),
-  deleteQuestionsController
-);
+questionsRoutes.delete("/:id", ensureAuthMiddleware, ensureInputIsUuidMiddleware, deleteQuestionsController);
