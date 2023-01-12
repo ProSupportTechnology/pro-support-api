@@ -11,19 +11,29 @@ import { ensureUserIsAdmin } from "../middlewares/ensureUserIsAdm.middleware";
 
 export const answersRoutes = Router();
 
-answersRoutes.get("", ensureAuthMiddleware, ensureUserIsAdmin, listAnswersController);
-answersRoutes.post("", ensureAuthMiddleware, ensureUserIsAdmin, createAnswerController);
+answersRoutes.get(
+  "",
+  ensureAuthMiddleware,
+  ensureUserIsAdmin,
+  listAnswersController
+);
+answersRoutes.post(
+  "",
+  ensureAuthMiddleware,
+  ensureUserIsAdmin,
+  createAnswerController
+);
 answersRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
   ensureUserIsAdmin,
-  ensureInputIsUuidMiddleware,
+  ensureInputIsUuidMiddleware(),
   editAnswerController
 );
 answersRoutes.delete(
   "/:id",
   ensureAuthMiddleware,
   ensureUserIsAdmin,
-  ensureInputIsUuidMiddleware,
+  ensureInputIsUuidMiddleware(),
   deleteAnswerController
 );

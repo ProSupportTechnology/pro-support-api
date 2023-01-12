@@ -17,7 +17,7 @@ usersRoutes.post("", registerUserController);
 usersRoutes.get(
   "/:id",
   ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware,
+  ensureInputIsUuidMiddleware(),
   retrieveUserProfileController
 );
 
@@ -31,13 +31,13 @@ usersRoutes.get(
 usersRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware,
+  ensureInputIsUuidMiddleware(),
   updateUserProfileController
 );
 
 usersRoutes.delete(
   "/:id",
   ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware,
+  ensureInputIsUuidMiddleware(),
   deleteUserAccountController
 );
