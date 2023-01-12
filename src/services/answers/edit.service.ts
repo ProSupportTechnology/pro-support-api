@@ -4,7 +4,7 @@ import { AppError } from "../../errors";
 import { iAnswerRequest, iAnswerResponse } from "../../interfaces/answers.interfaces";
 import { answareResponseSchema } from "../../schemas/answer.schemas";
 
-export const editAnswerService = async (body: iAnswerRequest, answerId: string) => {
+export const editAnswerService = async (body: iAnswerRequest, answerId: string): Promise<iAnswerResponse> => {
   const answerRepo = AppDataSource.getRepository(Answer);
 
   let answer = await answerRepo.findOneByOrFail({ id: answerId }).catch(() => {

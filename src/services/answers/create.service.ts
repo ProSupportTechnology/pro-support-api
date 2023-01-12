@@ -3,10 +3,10 @@ import { Answer } from "../../entities/answer.entity";
 import { Question } from "../../entities/question.entity";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
-import { iAnswerRequest } from "../../interfaces/answers.interfaces";
+import { iAnswerRequest, iAnswerResponse } from "../../interfaces/answers.interfaces";
 import { answareResponseSchema } from "../../schemas/answer.schemas";
 
-export const createAnswerService = async (answerBody: iAnswerRequest) => {
+export const createAnswerService = async (answerBody: iAnswerRequest): Promise<iAnswerResponse> => {
   const { userId, questionId } = answerBody;
 
   const answersRepository = AppDataSource.getRepository(Answer);
