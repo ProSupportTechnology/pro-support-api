@@ -6,6 +6,7 @@ import {
   retrieveUserProfileController,
   updateUserProfileController,
 } from "../controllers/user.controllers";
+
 import ensureAuthMiddleware from "../middlewares/ensure.authorization.middleware";
 import { ensureInputIsUuidMiddleware } from "../middlewares/ensureInputIsUuid.middleware";
 import { ensureUserIsAdmin } from "../middlewares/ensureUserIsAdm.middleware";
