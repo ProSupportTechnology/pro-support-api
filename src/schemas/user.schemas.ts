@@ -5,6 +5,7 @@ import {
   iUserLogin,
   iUserUpdate,
   iUserResponse,
+  iUserUpdateReturn,
 } from "../interfaces/users.interfaces";
 
 const userRequestSchema: SchemaOf<iUserRequest> = yup.object().shape({
@@ -19,9 +20,8 @@ const userWithoutPasswordSchema: SchemaOf<iUserResponse> = yup.object().shape({
   name: yup.string().notRequired(),
   email: yup.string().email().notRequired(),
   isAdm: yup.boolean().notRequired(),
-  isActive: yup.boolean().notRequired(),
-  bio: yup.string().notRequired(),
-  image: yup.string().notRequired(),
+  bio: yup.string().notRequired().nullable(),
+  image: yup.string().notRequired().nullable(),
   createdAt: yup.date().notRequired(),
   updatedAt: yup.date().notRequired(),
 });
@@ -39,6 +39,15 @@ const userUpdateSchema: SchemaOf<iUserUpdate> = yup.object().shape({
   image: yup.string().notRequired(),
 });
 
+const userUpdateReturnSchema: SchemaOf<iUserUpdateReturn> = yup.object().shape({
+  email: yup.string(),
+  id: yup.string(),
+  name: yup.string(),
+  password: yup.string(),
+  bio: yup.string().nullable(),
+  image: yup.string().nullable(),
+});
+
 const listAllUsersSchema: SchemaOf<iUserResponse[]> = yup.array(
   userWithoutPasswordSchema
 );
@@ -49,4 +58,5 @@ export {
   userLoginSchema,
   userUpdateSchema,
   listAllUsersSchema,
+  userUpdateReturnSchema,
 };

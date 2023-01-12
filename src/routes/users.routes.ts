@@ -2,7 +2,6 @@ import { Router } from "express";
 
 export const usersRoutes = Router();
 
-//Controllers:
 import {
   deleteUserAccountController,
   listUsersController,
@@ -11,21 +10,14 @@ import {
   updateUserProfileController,
 } from "../controllers/user.controllers";
 
-//Middlewares:
+import ensureAuthMiddleware from "../middlewares/ensure.authorization.middleware";
 
-//Serializers:
-
-//Register route:
 usersRoutes.post("", registerUserController);
 
-//User profile:
 usersRoutes.get("/:id", retrieveUserProfileController);
 
-//List users:
-usersRoutes.get("", listUsersController);
+usersRoutes.get("", ensureAuthMiddleware, listUsersController);
 
-//Update user account:
-usersRoutes.patch("/:id", updateUserProfileController);
+usersRoutes.patch("/:id", ensureAuthMiddleware, updateUserProfileController);
 
-//Delete user account:
-usersRoutes.delete("/:id", deleteUserAccountController);
+usersRoutes.delete("/:id", ensureAuthMiddleware, deleteUserAccountController);
