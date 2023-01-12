@@ -5,6 +5,7 @@ import {
   iQuestionRequest,
   iQuestionResponse,
 } from "../../interfaces/questions.interfaces";
+import { questionReturnSchema } from "../../schemas/question.schemas";
 
 export const createQuestionService = async (
   body: iQuestionRequest,
@@ -24,10 +25,14 @@ export const createQuestionService = async (
 
   await questionRepo.save(question);
 
-  const response = {
+  const bodyResponse = {
     ...question,
-    userId: idUser,
+    user: idUser,
   };
 
-  return response;
+  const questionReturn = await questionReturnSchema.validate(bodyResponse, {
+    stripUnknown: true,
+  });
+
+  return questionReturn;
 };
