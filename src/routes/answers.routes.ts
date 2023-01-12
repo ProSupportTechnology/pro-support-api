@@ -11,13 +11,8 @@ import { ensureUserIsAdmin } from "../middlewares/ensureUserIsAdm.middleware";
 
 export const answersRoutes = Router();
 
-answersRoutes.get(
-  "",
-  ensureAuthMiddleware,
-  ensureUserIsAdmin,
-  listAnswersController
-);
-answersRoutes.post("", ensureUserIsAdmin, createAnswerController);
+answersRoutes.get("", ensureAuthMiddleware, ensureUserIsAdmin, listAnswersController);
+answersRoutes.post("", ensureAuthMiddleware, ensureUserIsAdmin, createAnswerController);
 answersRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
