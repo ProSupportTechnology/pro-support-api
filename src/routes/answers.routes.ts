@@ -27,6 +27,7 @@ answersRoutes.patch(
   ensureUserIsAdmin,
   ensureInputIsUuidMiddleware,
   ensureDataValidationMiddleware(bodyAnswerSchema),
+  ensureInputIsUuidMiddleware,
   editAnswerController
 );
 answersRoutes.delete(
