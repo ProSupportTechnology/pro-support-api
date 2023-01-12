@@ -13,7 +13,7 @@ export const questionsRoutes = Router();
 questionsRoutes.post("", ensureAuthMiddleware, createQuestionController);
 questionsRoutes.patch(
   "/:id",
-  ensureInputIsUuidMiddleware,
+  ensureInputIsUuidMiddleware(),
   ensureAuthMiddleware,
   editQuestionController
 );
@@ -21,6 +21,6 @@ questionsRoutes.get("", ensureAuthMiddleware, listQuestionsController);
 questionsRoutes.delete(
   "/:id",
   ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware,
+  ensureInputIsUuidMiddleware(),
   deleteQuestionsController
 );
