@@ -91,7 +91,7 @@ export default {
   // moduleNameMapper: {},
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-  // modulePathIgnorePatterns: [],
+  modulePathIgnorePatterns: ["mocks"],
 
   // Activates notifications for test results
   // notify: false,
@@ -189,4 +189,4 @@ export default {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-}
+};

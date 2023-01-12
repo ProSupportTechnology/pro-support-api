@@ -1,4 +1,4 @@
-import { User } from "../entities/user.entity";
+import { iUserResponse } from "./users.interfaces";
 
 export interface iQuestionRequest {
   title: string;
@@ -11,7 +11,7 @@ export interface iQuestionResponse {
   title: string;
   description: string;
   tech: string;
-  createdAt: string;
-  upadatedAt: string;
-  user: User;
+  createdAt: Date;
+  updatedAt: Date;
+  user: iUserResponse;
 }

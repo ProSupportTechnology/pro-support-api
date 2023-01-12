@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use("/users", usersRoutes);
 app.use("/questions", questionsRoutes);
-app.use("/responses", answersRoutes);
+app.use("/answers", answersRoutes);
 app.use("/login", loginRoutes);
 
 app.use(handleError);
