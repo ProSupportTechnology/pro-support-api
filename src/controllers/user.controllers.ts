@@ -25,7 +25,7 @@ export const retrieveUserProfileController = async (
   request: Request,
   response: Response
 ) => {
-  const userProfile = await retrieveUserProfileService();
+  const userProfile = await retrieveUserProfileService(request.params.id);
   return response.status(200).json(userProfile);
 };
 

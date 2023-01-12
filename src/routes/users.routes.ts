@@ -12,6 +12,7 @@ import {
   updateUserProfileController,
   uploadImageUserController,
 } from "../controllers/user.controllers";
+
 import ensureAuthMiddleware from "../middlewares/ensure.authorization.middleware";
 import { upload } from "../middlewares/upload.middleware";
 
@@ -26,11 +27,9 @@ usersRoutes.post("", registerUserController);
 
 usersRoutes.get("/:id", retrieveUserProfileController);
 
-usersRoutes.get("", listUsersController);
+usersRoutes.get("", ensureAuthMiddleware, listUsersController);
 
 usersRoutes.patch("/:id", ensureAuthMiddleware, updateUserProfileController);
-
-usersRoutes.delete("/:id", deleteUserAccountController);
 
 usersRoutes.post(
   "/upload/:id",
@@ -39,3 +38,4 @@ usersRoutes.post(
 );
 
 usersRoutes.get("/upload/:id/:public_id", getUploadImageController);
+usersRoutes.delete("/:id", ensureAuthMiddleware, deleteUserAccountController);
