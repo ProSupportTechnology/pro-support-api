@@ -28,37 +28,13 @@ import { ensureUserIsAdmin } from "../middlewares/ensureUserIsAdm.middleware";
 export const usersRoutes = Router();
 usersRoutes.post("", registerUserController);
 
-usersRoutes.get(
-  "/:id",
-  ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware(),
-  retrieveUserProfileController
-);
+usersRoutes.get("/:id", ensureAuthMiddleware, ensureInputIsUuidMiddleware, retrieveUserProfileController);
 
-usersRoutes.get(
-  "",
-  ensureAuthMiddleware,
-  ensureUserIsAdmin,
-  listUsersController
-);
+usersRoutes.get("", ensureAuthMiddleware, ensureUserIsAdmin, listUsersController);
 
-usersRoutes.patch(
-  "/:id",
-  ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware(),
-  updateUserProfileController
-);
+usersRoutes.patch("/:id", ensureAuthMiddleware, ensureInputIsUuidMiddleware, updateUserProfileController);
 
-usersRoutes.post(
-  "/upload/:id",
-  upload.single("image"),
-  uploadImageUserController
-);
+usersRoutes.post("/upload/:id", upload.single("image"), uploadImageUserController);
 
 usersRoutes.get("/upload/:id/:public_id", getUploadImageController);
-usersRoutes.delete(
-  "/:id",
-  ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware(),
-  deleteUserAccountController
-);
+usersRoutes.delete("/:id", ensureAuthMiddleware, ensureInputIsUuidMiddleware, deleteUserAccountController);
