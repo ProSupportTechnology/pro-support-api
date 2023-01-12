@@ -6,12 +6,14 @@ import {
   iQuestionResponse,
 } from "../../interfaces/questions.interfaces";
 import { questionReturnSchema } from "../../schemas/question.schemas";
+import { User } from "../../entities/user.entity";
 
 export const createQuestionService = async (
   body: iQuestionRequest,
   token: string
 ): Promise<iQuestionResponse> => {
   const questionRepo = AppDataSource.getRepository(Question);
+  const userRepo = AppDataSource.getRepository(User);
 
   let tokenUser = token.split(" ")[1];
 
@@ -21,13 +23,15 @@ export const createQuestionService = async (
     idUser += decoded.sub;
   });
 
+  const user = await userRepo.findOneBy({ id: idUser });
+
   const question = questionRepo.create(body);
 
   await questionRepo.save(question);
 
   const bodyResponse = {
     ...question,
-    user: idUser,
+    user: user,
   };
 
   const questionReturn = await questionReturnSchema.validate(bodyResponse, {

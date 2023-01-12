@@ -13,5 +13,5 @@ export interface iQuestionResponse {
   tech: string;
   createdAt: Date;
   updatedAt: Date;
-  user: User | string;
+  user: User | object;
 }

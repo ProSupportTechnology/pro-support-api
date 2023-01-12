@@ -4,6 +4,7 @@ import {
   iQuestionRequest,
   iQuestionResponse,
 } from "../interfaces/questions.interfaces";
+import { userWithoutPasswordSchema } from "./user.schemas";
 
 export const questionSchema: SchemaOf<iQuestionRequest> = yup.object().shape({
   title: yup.string().required(),
@@ -14,10 +15,9 @@ export const questionSchema: SchemaOf<iQuestionRequest> = yup.object().shape({
 export const questionReturnSchema: SchemaOf<iQuestionResponse> = yup
   .object()
   .shape({
-    user: yup.string(),
+    user: userWithoutPasswordSchema,
     updatedAt: yup.date(),
     createdAt: yup.date(),
-    deletedAt: yup.date().nullable(),
     tech: yup.string(),
     description: yup.string(),
     title: yup.string(),
