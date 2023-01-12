@@ -1,7 +1,4 @@
 import { Router } from "express";
-
-export const usersRoutes = Router();
-
 import {
   deleteUserAccountController,
   listUsersController,
@@ -9,26 +6,37 @@ import {
   retrieveUserProfileController,
   updateUserProfileController,
 } from "../controllers/user.controllers";
-import { User } from "../entities/user.entity";
 import ensureAuthMiddleware from "../middlewares/ensure.authorization.middleware";
 import { ensureInputIsUuidMiddleware } from "../middlewares/ensureInputIsUuid.middleware";
+import { ensureUserIsAdmin } from "../middlewares/ensureUserIsAdm.middleware";
 
+export const usersRoutes = Router();
 usersRoutes.post("", registerUserController);
 
-usersRoutes.get("/:id", retrieveUserProfileController);
+usersRoutes.get(
+  "/:id",
+  ensureAuthMiddleware,
+  ensureInputIsUuidMiddleware,
+  retrieveUserProfileController
+);
 
-usersRoutes.get("", listUsersController);
+usersRoutes.get(
+  "",
+  ensureAuthMiddleware,
+  ensureUserIsAdmin,
+  listUsersController
+);
 
 usersRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware(User),
+  ensureInputIsUuidMiddleware,
   updateUserProfileController
 );
 
 usersRoutes.delete(
   "/:id",
   ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware(User),
+  ensureInputIsUuidMiddleware,
   deleteUserAccountController
 );

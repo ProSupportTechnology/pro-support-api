@@ -3,24 +3,14 @@ import { AppDataSource } from "../data-source";
 import { AppError } from "../errors";
 
 export const ensureInputIsUuidMiddleware =
-  (entity: any) => async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const verifyIdExist = await AppDataSource.getRepository(entity);
-      if (!verifyIdExist) {
-        throw new AppError("Not found.", 404);
-      }
-    } catch (error) {
-      console.log(error, "oi");
-      if (error.statusCode) {
-        throw new AppError(error.message.message, error.statusCode);
-      }
-      if (error.routine === "string_to_uuid") {
-        throw new AppError(
-          "The id passed by parameter must be of type uuid",
-          404
-        );
-      }
-    }
+  () => async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
 
+    const regexExp =
+      /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+    const isUuid = regexExp.test(id);
+    if (!isUuid) {
+      throw new AppError("invalid input syntax for type uuid", 404);
+    }
     return next();
   };
