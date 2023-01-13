@@ -6,15 +6,13 @@ export const deleteUserService = async (
   paramsUserId: string
 ): Promise<Object> => {
   const userRepository = AppDataSource.getRepository(User);
-  const userToDelete = await userRepository.findOneBy({
-    id: paramsUserId,
-  });
-
-  console.log(userToDelete);
-
-  if (!userToDelete) {
-    throw new AppError("User not found", 404);
-  }
+  const userToDelete = await userRepository
+    .findOneByOrFail({
+      id: paramsUserId,
+    })
+    .catch(() => {
+      throw new AppError("User not found", 404);
+    });
 
   await userRepository.softRemove(userToDelete);
 
