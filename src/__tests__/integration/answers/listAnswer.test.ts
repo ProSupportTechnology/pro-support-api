@@ -101,6 +101,7 @@ describe("/answers", () => {
 
     expect(answers.status).toBe(401);
     expect(answers.body).toHaveProperty("message");
+    expect(answers.body).not.toHaveProperty("id");
   });
 
   it("GET /answers - Should not be able to list answers without admin permission", async () => {
@@ -108,5 +109,6 @@ describe("/answers", () => {
 
     expect(answers.status).toBe(403);
     expect(answers.body).toHaveProperty("message");
+    expect(answers.body).not.toHaveProperty("id");
   });
 });
