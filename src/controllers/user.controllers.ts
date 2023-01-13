@@ -8,48 +8,42 @@ import listUsersService from "../services/users/listUsers.service";
 import updateUserService from "../services/users/updateUser.service";
 import deleteUserAccountService from "../services/users/deleteUserAccount.service";
 
-export const registerUserController = async (
-  request: Request,
-  response: Response
-) => {
-  const userData: iUserRequest = request.body;
+export const registerUserController = async (req: Request, res: Response) => {
+  const userData: iUserRequest = req.body;
   const newUser = await registerUserService(userData);
-  return response.status(201).json(newUser);
+  return res.status(201).json(newUser);
 };
 
 export const retrieveUserProfileController = async (
-  request: Request,
-  response: Response
+  req: Request,
+  res: Response
 ) => {
   const userProfile = await retrieveUserProfileService();
-  return response.status(200).json(userProfile);
+  return res.json(userProfile);
 };
 
-export const listUsersController = async (
-  request: Request,
-  response: Response
-) => {
+export const listUsersController = async (req: Request, res: Response) => {
   const allUsers = await listUsersService();
-  return response.status(200).json(allUsers);
+  return res.json(allUsers);
 };
 
 export const updateUserProfileController = async (
-  request: Request,
-  response: Response
+  req: Request,
+  res: Response
 ) => {
-  const userData: iUserUpdate = request.body;
+  const userData: iUserUpdate = req.body;
   const updatedUser = await updateUserService(
-    request.user.id,
-    request.params.id,
+    req.user.id,
+    req.params.id,
     userData
   );
-  return response.status(200).json(updatedUser);
+  return res.json(updatedUser);
 };
 
 export const deleteUserAccountController = async (
-  request: Request,
-  response: Response
+  req: Request,
+  res: Response
 ) => {
-  await deleteUserAccountService(request.params.id);
-  return response.status(204).json({});
+  const response = await deleteUserAccountService(req.params.id);
+  return res.status(204).json(response);
 };

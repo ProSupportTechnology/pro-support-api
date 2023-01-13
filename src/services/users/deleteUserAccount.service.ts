@@ -1,9 +1,8 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
-import { iUserRequest } from "../../interfaces/users.interfaces";
 
-const deleteUserService = async (paramsUserId: string) => {
+const deleteUserService = async (paramsUserId: string): Promise<Object> => {
   const userRepository = AppDataSource.getRepository(User);
   const userToDelete = await userRepository.findOneBy({
     id: paramsUserId,

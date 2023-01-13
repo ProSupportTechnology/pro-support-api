@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const ensureAuthMiddleware = async (
+export const ensureAuthMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -33,5 +33,3 @@ const ensureAuthMiddleware = async (
     return next();
   });
 };
-
-export default ensureAuthMiddleware;

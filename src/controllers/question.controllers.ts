@@ -33,6 +33,6 @@ export const deleteQuestionsController = async (
   res: Response
 ) => {
   const questionId: string = req.params.id;
-  const status = await deleteQuestionsService(questionId);
-  return res.status(status).json({});
+  const response = await deleteQuestionsService(questionId);
+  return res.status(204).json(response);
 };

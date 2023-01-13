@@ -10,7 +10,7 @@ export const ensureInputIsUuidMiddleware =
       /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
     const isUuid = regexExp.test(id);
     if (!isUuid) {
-      throw new AppError("invalid input syntax for type uuid", 404);
+      throw new AppError("invalid input syntax for type uuid", 406);
     }
     return next();
   };

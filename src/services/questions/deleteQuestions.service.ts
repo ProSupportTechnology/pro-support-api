@@ -3,7 +3,7 @@ import { Question } from "../../entities/question.entity";
 import { AppError } from "../../errors";
 import { iQuestionResponse } from "../../interfaces/questions.interfaces";
 
-export const deleteQuestionsService = async (id: string): Promise<number> => {
+export const deleteQuestionsService = async (id: string): Promise<Object> => {
   const questionsRepository = AppDataSource.getRepository(Question);
   const question = await questionsRepository.findOneBy({ id: id });
 
@@ -14,5 +14,5 @@ export const deleteQuestionsService = async (id: string): Promise<number> => {
   await questionsRepository.softRemove(question);
   await questionsRepository.save({ ...question });
 
-  return 204;
+  return {};
 };
