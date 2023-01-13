@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
+import { iJWTDecoded } from "../interfaces/jwt.interfaces";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { AppError } from "../errors";
 
 export const ensureAuthMiddleware = async (
   req: Request,
@@ -17,19 +19,20 @@ export const ensureAuthMiddleware = async (
 
   token = token.split(" ")[1];
 
-  jwt.verify(token, process.env.SECRET_KEY as string, (error, decoded: any) => {
-    if (error) {
-      console.log(error);
-      return res.status(401).json({
-        message: error.message,
-      });
+  jwt.verify(
+    token,
+    process.env.SECRET_KEY as string,
+    (error, decoded: iJWTDecoded) => {
+      if (error) {
+        throw new AppError(error.message, 401);
+      }
+
+      req.user = {
+        id: decoded.sub,
+        isAdm: decoded.isAdm,
+      };
+
+      return next();
     }
-
-    req.user = {
-      id: decoded.sub,
-      isAdm: decoded.isAdm,
-    };
-
-    return next();
-  });
+  );
 };

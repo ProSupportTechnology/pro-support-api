@@ -5,7 +5,7 @@ import {
   editQuestionController,
   listQuestionsController,
 } from "../controllers/question.controllers";
-import ensureAuthMiddleware from "../middlewares/ensure.authorization.middleware";
+import { ensureAuthMiddleware } from "../middlewares/ensure.authorization.middleware";
 import { ensureInputIsUuidMiddleware } from "../middlewares/ensureInputIsUuid.middleware";
 
 export const questionsRoutes = Router();

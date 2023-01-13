@@ -3,14 +3,7 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entities/user.entity";
 import { AppError } from "../errors";
 
-export const ensureUserIsAdmin = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  let token = req.headers.authorization;
-  console.log(req.user.id);
-
+export const ensureUserIsAdmin = async (req: Request, res: Response, next: NextFunction) => {
   const userRepository = AppDataSource.getRepository(User);
   const verifyUser = await userRepository.findOneBy({ id: req.user.id });
   if (!verifyUser.isAdm) {

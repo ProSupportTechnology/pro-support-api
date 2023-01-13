@@ -6,9 +6,7 @@ import { listAllUsersSchema } from "../../schemas/user.schemas";
 const registerUserService = async (): Promise<iUserResponse[]> => {
   const userRepository = AppDataSource.getRepository(User);
 
-  const allUsers = await userRepository.find({
-    withDeleted: true,
-  });
+  const allUsers = await userRepository.find();
 
   const allUsersWithoutPassword = await listAllUsersSchema.validate(allUsers, {
     stripUnknown: true,
