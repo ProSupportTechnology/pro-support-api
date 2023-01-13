@@ -12,18 +12,16 @@ export const editQuestionService = async (
 ): Promise<iQuestionResponse> => {
   const questionRepo = AppDataSource.getRepository(Question);
 
-  try {
-    const question = await questionRepo.findOneBy({ id: id });
+  const question = await questionRepo.findOneByOrFail({ id: id }).catch(() => {
+    throw new AppError("Question not found", 404);
+  });
 
-    const updatedQuestion = questionRepo.create({
-      ...question,
-      ...body,
-    });
+  const updatedQuestion = questionRepo.create({
+    ...question,
+    ...body,
+  });
 
-    await questionRepo.save(updatedQuestion);
+  await questionRepo.save(updatedQuestion);
 
-    return updatedQuestion;
-  } catch (error) {
-    throw new AppError("This id is not in the database", 404);
-  }
+  return updatedQuestion;
 };

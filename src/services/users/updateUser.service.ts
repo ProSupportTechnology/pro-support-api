@@ -4,20 +4,18 @@ import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
 import { userUpdateReturnSchema } from "../../schemas/user.schemas";
 
-const updateUserService = async (
+export const updateUserService = async (
   paramsUserId: string,
   userData: iUserUpdate
 ): Promise<iUserUpdate> => {
   const userRepository = AppDataSource.getRepository(User);
-  const userToUpdate = await userRepository.findOneBy({
-    id: paramsUserId,
-  });
-
-  console.log(userData);
-
-  if (!userToUpdate) {
-    throw new AppError("User not found with this id", 404);
-  }
+  const userToUpdate = await userRepository
+    .findOneByOrFail({
+      id: paramsUserId,
+    })
+    .catch(() => {
+      throw new AppError("User not found", 404);
+    });
 
   const updatedUser = userRepository.create({
     ...userToUpdate,
@@ -26,13 +24,9 @@ const updateUserService = async (
 
   await userRepository.save(updatedUser);
 
-  console.log(updatedUser);
-
   const userUpdatedReturn = await userUpdateReturnSchema.validate(updatedUser, {
     stripUnknown: true,
   });
 
   return userUpdatedReturn;
 };
-
-export default updateUserService;

@@ -4,46 +4,37 @@ import fs from "fs";
 import "dotenv/config";
 
 import { iUserRequest, iUserUpdate } from "../interfaces/users.interfaces";
+import { listUsersService } from "../services/users/listUsers.service";
+import { registerUserService } from "../services/users/registerUser.service";
+import { retrieveUserProfileService } from "../services/users/retrieveUserProfile.service";
+import { updateImageUserService } from "../services/users/uploadImageUser.service";
+import { updateUserService } from "../services/users/updateUser.service";
+import { deleteUserService } from "../services/users/deleteUserAccount.service";
 
-import registerUserService from "../services/users/registerUser.service";
-import retrieveUserProfileService from "../services/users/retrieveUserProfile.service";
-import listUsersService from "../services/users/listUsers.service";
-import updateUserService from "../services/users/updateUser.service";
-import deleteUserAccountService from "../services/users/deleteUserAccount.service";
-import updateImageUserService from "../services/users/uploadImageUser.service";
-
-export const registerUserController = async (
-  request: Request,
-  response: Response
-) => {
-  const userData: iUserRequest = request.body;
+export const registerUserController = async (req: Request, res: Response) => {
+  const userData: iUserRequest = req.body;
   const newUser = await registerUserService(userData);
-  return response.status(201).json(newUser);
+  return res.status(201).json(newUser);
 };
 
 export const retrieveUserProfileController = async (
-  request: Request,
-  response: Response
+  req: Request,
+  res: Response
 ) => {
-  const userProfile = await retrieveUserProfileService(request.params.id);
-  return response.status(200).json(userProfile);
+  const userId: string = req.params.id;
+  const userProfile = await retrieveUserProfileService(userId);
+  return res.json(userProfile);
 };
 
-export const listUsersController = async (
-  request: Request,
-  response: Response
-) => {
+export const listUsersController = async (req: Request, res: Response) => {
   const allUsers = await listUsersService();
-  return response.status(200).json(allUsers);
+  return res.json(allUsers);
 };
 
-export const updateUserProfileController = async (
-  request: Request,
-  response: Response
-) => {
-  const userData: iUserUpdate = request.body;
-  const updatedUser = await updateUserService(request.params.id, userData);
-  return response.status(200).json(updatedUser);
+export const updateUserController = async (req: Request, res: Response) => {
+  const userData: iUserUpdate = req.body;
+  const updatedUser = await updateUserService(req.params.id, userData);
+  return res.json(updatedUser);
 };
 
 export const getUploadImageController = async (
@@ -88,9 +79,9 @@ export const uploadImageUserController = async (
 };
 
 export const deleteUserAccountController = async (
-  request: Request,
-  response: Response
+  req: Request,
+  res: Response
 ) => {
-  await deleteUserAccountService(request.params.id);
-  return response.status(204).json({});
+  const response = await deleteUserService(req.params.id);
+  return res.status(204).json(response);
 };

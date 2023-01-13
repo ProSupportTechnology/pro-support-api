@@ -3,12 +3,12 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entities/user.entity";
 import { AppError } from "../errors";
 
-const ensureUserExistsMiddleware = async (
+export const ensureUserExistsMiddleware = async (
   request: Request,
   response: Response,
   next: NextFunction
 ) => {
-  const paramsUserId = request.params.id;
+  const paramsUserId: string = request.params.id;
 
   const userRepository = AppDataSource.getRepository(User);
   const foundUser = userRepository.findOneBy({ id: paramsUserId });
@@ -19,5 +19,3 @@ const ensureUserExistsMiddleware = async (
 
   return next();
 };
-
-export default ensureUserExistsMiddleware;
