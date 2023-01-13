@@ -37,7 +37,7 @@ export const listUsersController = async (
   return response.status(200).json(allUsers);
 };
 
-export const updateUserProfileController = async (
+export const updateUserController = async (
   request: Request,
   response: Response
 ) => {

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AnySchema } from "yup";
 
-const ensureDataValidationMiddleware =
+export const ensureDataValidationMiddleware =
   (schema: AnySchema) =>
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -16,5 +16,3 @@ const ensureDataValidationMiddleware =
       return response.status(400).json({ error: error.errors });
     }
   };
-
-export default ensureDataValidationMiddleware;

@@ -13,8 +13,6 @@ const updateUserService = async (
     id: paramsUserId,
   });
 
-  console.log(userData);
-
   if (!userToUpdate) {
     throw new AppError("User not found with this id", 404);
   }
@@ -25,8 +23,6 @@ const updateUserService = async (
   });
 
   await userRepository.save(updatedUser);
-
-  console.log(updatedUser);
 
   const userUpdatedReturn = await userUpdateReturnSchema.validate(updatedUser, {
     stripUnknown: true,
