@@ -14,7 +14,7 @@ export const updateImageUserService = async (
       id: paramsId,
     })
     .catch(() => {
-      throw new AppError("User not found with this id", 404);
+      throw new AppError("User not found", 404);
     });
 
   const dataImport = {

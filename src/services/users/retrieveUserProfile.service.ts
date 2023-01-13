@@ -4,7 +4,7 @@ import { iUserResponse } from "../../interfaces/users.interfaces";
 import { userWithoutPasswordSchema } from "../../schemas/user.schemas";
 
 export const retrieveUserProfileService = async (
-  paramsUserId
+  paramsUserId: string
 ): Promise<iUserResponse> => {
   const userRepository = AppDataSource.getRepository(User);
   const userProfile = userRepository.findOneBy({ id: paramsUserId });

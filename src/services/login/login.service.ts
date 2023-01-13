@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { compare, hashSync } from "bcryptjs";
 import "dotenv/config";
-import { IUserLogin } from "../../interfaces/users.interfaces";
+import { iUserLogin } from "../../interfaces/users.interfaces";
 import { AppError } from "../../errors";
 import { User } from "../../entities/user.entity";
 import { AppDataSource } from "../../data-source";
@@ -9,23 +9,21 @@ import { AppDataSource } from "../../data-source";
 export const loginService = async ({
   email,
   password,
-}: IUserLogin): Promise<string> => {
+}: iUserLogin): Promise<string> => {
   const userRepository = AppDataSource.getRepository(User);
-
-  console.log(hashSync(password, 10));
 
   const user = await userRepository.findOneBy({
     email: email,
   });
 
   if (!user) {
-    throw new AppError("User or password is not valid", 403);
+    throw new AppError("User or password is invalid", 403);
   }
 
   const passwordMatch = await compare(password, user.password);
 
   if (!passwordMatch) {
-    throw new AppError("Password Incorrect", 403);
+    throw new AppError("User or password is invalid", 403);
   }
 
   const token = jwt.sign(

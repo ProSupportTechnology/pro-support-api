@@ -9,7 +9,7 @@ export const ensureAuthMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  let token = req.headers.authorization;
+  let token: string = req.headers.authorization;
 
   if (!token) {
     return res.status(401).json({

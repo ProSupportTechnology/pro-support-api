@@ -9,13 +9,13 @@ export const updateUserService = async (
   userData: iUserUpdate
 ): Promise<iUserUpdate> => {
   const userRepository = AppDataSource.getRepository(User);
-  const userToUpdate = await userRepository.findOneBy({
-    id: paramsUserId,
-  });
-
-  if (!userToUpdate) {
-    throw new AppError("User not found with this id", 404);
-  }
+  const userToUpdate = await userRepository
+    .findOneByOrFail({
+      id: paramsUserId,
+    })
+    .catch(() => {
+      throw new AppError("User not found", 404);
+    });
 
   const updatedUser = userRepository.create({
     ...userToUpdate,

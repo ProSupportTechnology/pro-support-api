@@ -8,7 +8,7 @@ export const ensureUserExistsMiddleware = async (
   response: Response,
   next: NextFunction
 ) => {
-  const paramsUserId = request.params.id;
+  const paramsUserId: string = request.params.id;
 
   const userRepository = AppDataSource.getRepository(User);
   const foundUser = userRepository.findOneBy({ id: paramsUserId });
