@@ -1,0 +1,45 @@
+{
+  "name": "pro-support-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ProSupportTechnology/pro-support-api.git",
+  "author": "Wesley de Matos Souza <wesleydematos3@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "test": "cross-env NODE_ENV=test SECRET_KEY=chaveSecretaPraCaramb@ jest",
+    "build": "tsc",
+    "start": "node dist/src/server.js"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express": "^4.17.15",
+    "@types/jest": "^29.2.5",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/node": "^18.11.18",
+    "@types/supertest": "^2.0.12",
+    "jest": "^29.3.1",
+    "sqlite3": "^5.1.4",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@types/multer": "^1.4.7",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.33.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.8.0",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^10.9.1",
+    "typeorm": "^0.3.11",
+    "yup": "^0.32.11"
+  }
+}
