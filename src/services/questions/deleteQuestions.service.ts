@@ -1,7 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Question } from "../../entities/question.entity";
 import { AppError } from "../../errors";
-import { iQuestionResponse } from "../../interfaces/questions.interfaces";
 
 export const deleteQuestionsService = async (id: string): Promise<number> => {
   const questionsRepository = AppDataSource.getRepository(Question);
