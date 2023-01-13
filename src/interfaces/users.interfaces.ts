@@ -37,12 +37,12 @@ export interface iUserResponse {
   updatedAt: Date;
 }
 
-export interface IUserLogin {
+export interface iUserLogin {
   email: string;
   password: string;
 }
 
-export interface IUser {
+export interface iUser {
   id: string;
   name: string;
   email: string;

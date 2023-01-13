@@ -3,7 +3,7 @@ import { User } from "../../entities/user.entity";
 import { iUserResponse } from "../../interfaces/users.interfaces";
 import { listAllUsersSchema } from "../../schemas/user.schemas";
 
-const registerUserService = async (): Promise<iUserResponse[]> => {
+export const listUsersService = async (): Promise<iUserResponse[]> => {
   const userRepository = AppDataSource.getRepository(User);
 
   const allUsers = await userRepository.find();
@@ -14,5 +14,3 @@ const registerUserService = async (): Promise<iUserResponse[]> => {
 
   return allUsersWithoutPassword;
 };
-
-export default registerUserService;

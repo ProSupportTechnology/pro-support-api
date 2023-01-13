@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { listAnswersService } from "../services/answers/list.service";
+import { listAnswersService } from "../services/answers/listAnswer.service";
 import { iAnswerRequest } from "../interfaces/answers.interfaces";
-import { createAnswerService } from "../services/answers/create.service";
-import { editAnswerService } from "../services/answers/edit.service";
-import { deleteAnswerService } from "../services/answers/delete.service";
+import { createAnswerService } from "../services/answers/createAnswer.service";
+import { editAnswerService } from "../services/answers/editAnswer.service";
+import { deleteAnswerService } from "../services/answers/deleteAnswer.service";
 
 export const listAnswersController = async (req: Request, res: Response) => {
   const questions = await listAnswersService();

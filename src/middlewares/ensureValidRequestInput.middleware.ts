@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors";
+import { iUser } from "../interfaces/users.interfaces";
 
 export const ensureValidRequestInputMiddleware = async (
   request: Request,
   response: Response,
   next: NextFunction
 ) => {
-  const userData = request.body;
+  const userData: iUser = request.body;
 
   let invalidField = false;
 

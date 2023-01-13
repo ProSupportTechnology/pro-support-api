@@ -1,18 +1,16 @@
 import { AppDataSource } from "../../data-source";
 import { Question } from "../../entities/question.entity";
 import { AppError } from "../../errors";
-import { iQuestionResponse } from "../../interfaces/questions.interfaces";
 
-export const deleteQuestionsService = async (id: string): Promise<number> => {
+export const deleteQuestionsService = async (id: string): Promise<Object> => {
   const questionsRepository = AppDataSource.getRepository(Question);
   const question = await questionsRepository.findOneBy({ id: id });
 
   if (!question) {
-    throw new AppError("Question doesn't exists", 404);
+    throw new AppError("Question doesn't exists", 409);
   }
 
   await questionsRepository.softRemove(question);
-  await questionsRepository.save({ ...question });
 
-  return 204;
+  return {};
 };
