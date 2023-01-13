@@ -3,7 +3,7 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entities/user.entity";
 import { AppError } from "../errors";
 
-const ensureUserExistsMiddleware = async (
+export const ensureUserExistsMiddleware = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -19,5 +19,3 @@ const ensureUserExistsMiddleware = async (
 
   return next();
 };
-
-export default ensureUserExistsMiddleware;

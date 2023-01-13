@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors";
 
-const ensureValidRequestInputMiddleware = async (
+export const ensureValidRequestInputMiddleware = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -22,5 +22,3 @@ const ensureValidRequestInputMiddleware = async (
 
   return next();
 };
-
-export default ensureValidRequestInputMiddleware;
