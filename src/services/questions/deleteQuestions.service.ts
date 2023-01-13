@@ -4,11 +4,9 @@ import { AppError } from "../../errors";
 
 export const deleteQuestionsService = async (id: string): Promise<Object> => {
   const questionsRepository = AppDataSource.getRepository(Question);
-  const question = await questionsRepository.findOneBy({ id: id });
-
-  if (!question) {
-    throw new AppError("Question doesn't exists", 409);
-  }
+  const question = await questionsRepository.findOneByOrFail({ id: id }).catch(() => {
+    throw new AppError("Question doesn't exists", 404);
+  });
 
   await questionsRepository.softRemove(question);
 
