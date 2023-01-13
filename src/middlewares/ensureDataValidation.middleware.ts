@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AnySchema } from "yup";
+import { AppError } from "../errors";
 
 export const ensureDataValidationMiddleware =
   (schema: AnySchema) =>
@@ -13,6 +14,6 @@ export const ensureDataValidationMiddleware =
       request.body = validated;
       return next();
     } catch (error) {
-      return response.status(400).json({ error: error.errors });
+      throw new AppError(error.errors);
     }
   };

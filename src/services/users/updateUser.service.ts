@@ -4,7 +4,7 @@ import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
 import { userUpdateReturnSchema } from "../../schemas/user.schemas";
 
-const updateUserService = async (
+export const updateUserService = async (
   paramsUserId: string,
   userData: iUserUpdate
 ): Promise<iUserUpdate> => {
@@ -30,5 +30,3 @@ const updateUserService = async (
 
   return userUpdatedReturn;
 };
-
-export default updateUserService;

@@ -6,7 +6,7 @@ import { AppError } from "../../errors";
 import { User } from "../../entities/user.entity";
 import { AppDataSource } from "../../data-source";
 
-const loginService = async ({
+export const loginService = async ({
   email,
   password,
 }: IUserLogin): Promise<string> => {
@@ -41,5 +41,3 @@ const loginService = async ({
 
   return token;
 };
-
-export default loginService;

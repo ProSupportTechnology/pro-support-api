@@ -4,7 +4,7 @@ import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
 import { userUpdateReturnSchema } from "../../schemas/user.schemas";
 
-const updateImageUserService = async (
+export const updateImageUserService = async (
   imageData: any,
   paramsId: any
 ): Promise<iUserUpdate> => {
@@ -34,5 +34,3 @@ const updateImageUserService = async (
 
   return userUpdatedReturn;
 };
-
-export default updateImageUserService;

@@ -3,7 +3,7 @@ import { User } from "../../entities/user.entity";
 import { iUserResponse } from "../../interfaces/users.interfaces";
 import { userWithoutPasswordSchema } from "../../schemas/user.schemas";
 
-const retrieveUserProfileService = async (
+export const retrieveUserProfileService = async (
   paramsUserId
 ): Promise<iUserResponse> => {
   const userRepository = AppDataSource.getRepository(User);
@@ -18,5 +18,3 @@ const retrieveUserProfileService = async (
 
   return userWithoutPassword;
 };
-
-export default retrieveUserProfileService;
