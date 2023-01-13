@@ -4,7 +4,7 @@ import { IUser, iUserRequest } from "../../interfaces/users.interfaces";
 import { userWithoutPasswordSchema } from "../../schemas/user.schemas";
 import { AppError } from "../../errors";
 
-const registerUserService = async (userData: iUserRequest): Promise<IUser> => {
+export const registerUserService = async (userData: iUserRequest): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
 
   const userAlreadyExists = await userRepository.exist({
@@ -20,14 +20,9 @@ const registerUserService = async (userData: iUserRequest): Promise<IUser> => {
 
   await userRepository.save(newUser);
 
-  const userWithoutPassword = await userWithoutPasswordSchema.validate(
-    newUser,
-    {
-      stripUnknown: true,
-    }
-  );
+  const userWithoutPassword = await userWithoutPasswordSchema.validate(newUser, {
+    stripUnknown: true,
+  });
 
   return userWithoutPassword;
 };
-
-export default registerUserService;
