@@ -110,6 +110,17 @@ describe("/answers", () => {
     expect(answers.body).not.toHaveProperty("id");
   });
 
+  it("PATCH /answers - Should not be able to edit answers with answer id malformed", async () => {
+    const answers = await request(app)
+      .patch(`/answers/12345678abc`)
+      .set("Authorization", `Bearer ${admUserToken}`)
+      .send({ description: "Not possible", questionId, userId: "user id test" });
+
+    expect(answers.status).toBe(406);
+    expect(answers.body).toHaveProperty("message");
+    expect(answers.body).not.toHaveProperty("id");
+  });
+
   it("PATCH /answers - Should not be able to edit answers with invalid user id", async () => {
     const answers = await request(app)
       .patch(`/answers/${answerId}`)
