@@ -7,7 +7,7 @@ export const retrieveUserProfileService = async (
   paramsUserId: string
 ): Promise<iUserResponse> => {
   const userRepository = AppDataSource.getRepository(User);
-  const userProfile = userRepository.findOneBy({ id: paramsUserId });
+  const userProfile = await userRepository.findOneBy({ id: paramsUserId });
 
   const userWithoutPassword = await userWithoutPasswordSchema.validate(
     userProfile,
