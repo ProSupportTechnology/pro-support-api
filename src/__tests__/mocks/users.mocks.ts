@@ -1,10 +1,36 @@
+<<<<<<< HEAD
 import { iUserRequest, iUserResponse } from "../../interfaces/users.interfaces";
+=======
+import {
+  iUser,
+  iUserLogin,
+  iUserRequest,
+  iUserResponse,
+} from "../../interfaces/users.interfaces";
+>>>>>>> 24ce979dbde208eeaa1e79aa209bfc7999aa649c
 
 const mockedUserRequest: iUserRequest = {
   name: "gaspar",
   email: "gasparzinho@ghost.com",
   password: "ghostbuster4ever",
   isAdm: false,
+};
+
+const mockedUserAdmRequest: iUserRequest = {
+  name: "adm",
+  email: "adm@adm.com",
+  password: "ghostbuster4ever",
+  isAdm: true,
+};
+
+const mockedUserLogin: iUserLogin = {
+  email: "gasparzinho@ghost.com",
+  password: "ghostbuster4ever",
+};
+
+const mockedAdmLogin: iUserLogin = {
+  email: "adm@adm.com",
+  password: "ghostbuster4ever",
 };
 
 const mockedUserSuccessResponse: Omit<
@@ -41,4 +67,7 @@ export {
   mockedUserInvalidBodyRequest,
   mockedUserInvalidBodyResponse,
   mockedUserUniqueEmailResponse,
+  mockedUserAdmRequest,
+  mockedAdmLogin,
+  mockedUserLogin,
 };
