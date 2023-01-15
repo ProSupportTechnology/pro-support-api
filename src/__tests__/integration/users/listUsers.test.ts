@@ -1,5 +1,5 @@
 import request from "supertest";
-import { DataSource, Repository } from "typeorm";
+import { DataSource } from "typeorm";
 import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
 import {
@@ -64,6 +64,7 @@ describe("List users tests", () => {
       .set("Authorization", `Bearer ${tokenUser}`);
 
     expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toBe("Missing admin authorization");
     expect(response.status).toBe(403);
   });
 });
