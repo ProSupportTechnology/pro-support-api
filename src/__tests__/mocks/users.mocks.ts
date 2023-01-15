@@ -1,8 +1,4 @@
-import {
-  iUser,
-  iUserRequest,
-  iUserResponse,
-} from "../../interfaces/users.interfaces";
+import { iUserRequest, iUserResponse } from "../../interfaces/users.interfaces";
 
 const mockedUserRequest: iUserRequest = {
   name: "gaspar",

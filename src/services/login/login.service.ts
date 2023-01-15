@@ -17,7 +17,7 @@ export const loginService = async ({
   });
 
   if (!user) {
-    throw new AppError("User or password is invalid", 403);
+    throw new AppError("User does not exist", 403);
   }
 
   const passwordMatch = await compare(password, user.password);

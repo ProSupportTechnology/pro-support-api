@@ -6,7 +6,6 @@ import {
   mockedUserInvalidBodyRequest,
   mockedUserInvalidBodyResponse,
   mockedUserRequest,
-  mockedUserResponse,
   mockedUserSuccessResponse,
   mockedUserUniqueEmailResponse,
 } from "../../mocks/users.mocks";
