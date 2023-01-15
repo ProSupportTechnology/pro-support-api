@@ -1,5 +1,6 @@
 import {
   iUser,
+  iUserLogin,
   iUserRequest,
   iUserResponse,
 } from "../../interfaces/users.interfaces";
@@ -9,6 +10,23 @@ const mockedUserRequest: iUserRequest = {
   email: "gasparzinho@ghost.com",
   password: "ghostbuster4ever",
   isAdm: false,
+};
+
+const mockedUserAdmRequest: iUserRequest = {
+  name: "adm",
+  email: "adm@adm.com",
+  password: "ghostbuster4ever",
+  isAdm: true,
+};
+
+const mockedUserLogin: iUserLogin = {
+  email: "gasparzinho@ghost.com",
+  password: "ghostbuster4ever",
+};
+
+const mockedAdmLogin: iUserLogin = {
+  email: "adm@adm.com",
+  password: "ghostbuster4ever",
 };
 
 const mockedUserSuccessResponse: Omit<
@@ -45,4 +63,7 @@ export {
   mockedUserInvalidBodyRequest,
   mockedUserInvalidBodyResponse,
   mockedUserUniqueEmailResponse,
+  mockedUserAdmRequest,
+  mockedAdmLogin,
+  mockedUserLogin,
 };
