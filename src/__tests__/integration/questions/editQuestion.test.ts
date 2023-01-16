@@ -60,6 +60,20 @@ describe("test", () => {
     );
   });
 
+  it("PATCH /questions/:id -  should not be able to edit questions with id other than type uuid", async () => {
+    const adminLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedAdminLogin);
+
+    const token = `Bearer ${adminLoginResponse.body.token}`;
+
+    const response = await request(app)
+      .patch(`/questions/13146286`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toBe(406);
+    expect(response.body).toHaveProperty("message");
+  });
+
   it("PATCH /questions/:id - Must not be able to edit a question without authentication", async () => {
     const response = await request(app).post("/questions").send(mockedQuestion);
 
