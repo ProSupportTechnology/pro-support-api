@@ -12,6 +12,7 @@ export const ensureDataValidationMiddleware =
       });
 
       request.body = validated;
+
       return next();
     } catch (error) {
       throw new AppError(error.errors);
