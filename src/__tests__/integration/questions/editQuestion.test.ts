@@ -3,7 +3,7 @@ import { DataSource } from "typeorm";
 import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
 import { mockedAdmin, mockedAdminLogin } from "../../mocks/login.mocks";
-import { questionRequest } from "../../mocks/questions.mocks";
+import { mockedQuestionRequest } from "../../mocks/questions.mocks";
 
 describe("test", () => {
   let connection: DataSource;
@@ -38,7 +38,7 @@ describe("test", () => {
 
     const question = await request(app)
       .post("/questions")
-      .send(questionRequest)
+      .send(mockedQuestionRequest)
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
     const questionTobeUpdateId = question.body.id;
@@ -76,7 +76,7 @@ describe("test", () => {
   it("PATCH /questions/:id - Must not be able to edit a question without authentication", async () => {
     const response = await request(app)
       .post("/questions")
-      .send(questionRequest);
+      .send(mockedQuestionRequest);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);

@@ -3,10 +3,10 @@ import { DataSource } from "typeorm";
 import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
 import {
-  mockedAdmLogin,
-  mockedUserAdmRequest,
-  mockedUserRequest,
-} from "../../mocks/users.mocks";
+  mockedAdmin,
+  mockedAdminLogin,
+  mockedUser,
+} from "../../mocks/login.mocks";
 
 describe("List users tests", () => {
   let conn: DataSource;
@@ -23,12 +23,12 @@ describe("List users tests", () => {
 
     await request(app)
       .post("/users")
-      .send(mockedUserAdmRequest)
+      .send(mockedAdmin)
       .then((res) => {
         userId = res.body.id;
       });
 
-    await request(app).post("/users").send(mockedUserRequest);
+    await request(app).post("/users").send(mockedUser);
   });
 
   afterAll(async () => {
@@ -38,7 +38,7 @@ describe("List users tests", () => {
   it("GET/users/:id - Must be able to list user", async () => {
     const tokenAdmin = await request(app)
       .post("/login")
-      .send(mockedAdmLogin)
+      .send(mockedAdminLogin)
       .then((res) => res.body.token);
 
     const response = await request(app)
@@ -69,7 +69,7 @@ describe("List users tests", () => {
 
     const tokenAdmin = await request(app)
       .post("/login")
-      .send(mockedAdmLogin)
+      .send(mockedAdminLogin)
       .then((res) => res.body.token);
 
     const response = await request(app)
@@ -86,7 +86,7 @@ describe("List users tests", () => {
 
     const tokenAdmin = await request(app)
       .post("/login")
-      .send(mockedAdmLogin)
+      .send(mockedAdminLogin)
       .then((res) => res.body.token);
 
     const response = await request(app)

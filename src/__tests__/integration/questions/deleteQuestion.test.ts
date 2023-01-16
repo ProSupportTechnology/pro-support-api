@@ -1,10 +1,9 @@
 import request from "supertest";
-import { DataSource, Repository } from "typeorm";
+import { DataSource } from "typeorm";
 import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
-import { Question } from "../../../entities/question.entity";
-import { questionRequest } from "../../mocks/questions.mocks";
-import { mockedUserLogin, mockedUserRequest } from "../../mocks/users.mocks";
+import { mockedUser, mockedUserLogin } from "../../mocks/login.mocks";
+import { mockedQuestionRequest } from "../../mocks/questions.mocks";
 
 describe("Delete Questions tests", () => {
   let conn: DataSource;
@@ -22,7 +21,7 @@ describe("Delete Questions tests", () => {
 
     userId = await request(app)
       .post("/users")
-      .send(mockedUserRequest)
+      .send(mockedUser)
       .then((res) => res.body.id);
 
     userToken = await request(app)
@@ -33,7 +32,7 @@ describe("Delete Questions tests", () => {
     question = await request(app)
       .post("/questions")
       .set("Authorization", `Bearer ${userToken}`)
-      .send({ ...questionRequest, userId: userId })
+      .send({ ...mockedQuestionRequest, userId: userId })
       .then((res) => res.body.id);
   });
   afterAll(async () => {

@@ -1,32 +1,4 @@
-import {
-  iUserLogin,
-  iUserRequest,
-  iUserResponse,
-} from "../../interfaces/users.interfaces";
-
-export const mockedUserRequest: iUserRequest = {
-  name: "gaspar",
-  email: "gasparzinho@ghost.com",
-  password: "ghostbuster4ever",
-  isAdm: false,
-};
-
-export const mockedUserAdmRequest: iUserRequest = {
-  name: "adm",
-  email: "adm@adm.com",
-  password: "ghostbuster4ever",
-  isAdm: true,
-};
-
-export const mockedUserLogin: iUserLogin = {
-  email: "gasparzinho@ghost.com",
-  password: "ghostbuster4ever",
-};
-
-export const mockedAdmLogin: iUserLogin = {
-  email: "adm@adm.com",
-  password: "ghostbuster4ever",
-};
+import { iUserRequest, iUserResponse } from "../../interfaces/users.interfaces";
 
 export const mockedUserSuccessResponse: Omit<
   iUserResponse,

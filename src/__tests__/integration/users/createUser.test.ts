@@ -5,12 +5,12 @@ import { User } from "../../../entities/user.entity";
 import {
   mockedUserInvalidBodyRequest,
   mockedUserInvalidBodyResponse,
-  mockedUserRequest,
   mockedUserSuccessResponse,
   mockedUserUniqueEmailResponse,
 } from "../../mocks/users.mocks";
 import request from "supertest";
 import { getRounds } from "bcryptjs";
+import { mockedUser } from "../../mocks/login.mocks";
 
 describe("Create user route tests", () => {
   let connnection: DataSource;
@@ -32,7 +32,7 @@ describe("Create user route tests", () => {
     await connnection.destroy();
   });
   it("POST /users - Should be able to create user", async () => {
-    const response = await request(app).post(baseUrl).send(mockedUserRequest);
+    const response = await request(app).post(baseUrl).send(mockedUser);
 
     const expectedResults = {
       status: 201,
@@ -85,10 +85,10 @@ describe("Create user route tests", () => {
   });
 
   it("POSTS /users - Should not be able to create user | unique user", async () => {
-    const user = userRepository.create(mockedUserRequest);
+    const user = userRepository.create(mockedUser);
     await userRepository.save(user);
 
-    const response = await request(app).post(baseUrl).send(mockedUserRequest);
+    const response = await request(app).post(baseUrl).send(mockedUser);
 
     const expectedResults = {
       status: 409,

@@ -1,6 +1,6 @@
 import { iAnswerRequest } from "../../interfaces/answers.interfaces";
 
-export const mockAnswerRequest: iAnswerRequest = {
+export const mockedAnswerRequest: iAnswerRequest = {
   description: "Test description",
   questionId: "",
   userId: "",

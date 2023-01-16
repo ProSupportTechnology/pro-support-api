@@ -3,11 +3,11 @@ import { DataSource } from "typeorm";
 import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
 import {
-  mockedAdmLogin,
-  mockedUserAdmRequest,
+  mockedAdmin,
+  mockedAdminLogin,
+  mockedUser,
   mockedUserLogin,
-  mockedUserRequest,
-} from "../../mocks/users.mocks";
+} from "../../mocks/login.mocks";
 
 describe("List users tests", () => {
   let conn: DataSource;
@@ -21,9 +21,9 @@ describe("List users tests", () => {
         console.error("Error during Data Source initialization", err);
       });
 
-    await request(app).post("/users").send(mockedUserAdmRequest);
+    await request(app).post("/users").send(mockedAdmin);
 
-    await request(app).post("/users").send(mockedUserRequest);
+    await request(app).post("/users").send(mockedUser);
   });
 
   afterAll(async () => {
@@ -33,7 +33,7 @@ describe("List users tests", () => {
   it("GET/users - Must be able to list users", async () => {
     const tokenAdmin = await request(app)
       .post("/login")
-      .send(mockedAdmLogin)
+      .send(mockedAdminLogin)
       .then((res) => res.body.token);
 
     const response = await request(app)

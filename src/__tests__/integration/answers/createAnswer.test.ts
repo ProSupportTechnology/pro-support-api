@@ -3,6 +3,14 @@ import { DataSource, Repository } from "typeorm";
 import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
 import { Answer } from "../../../entities/answer.entity";
+import { mockedQuestionRequest } from "../../mocks/questions.mocks";
+import {
+  mockedAdmin,
+  mockedAdminLogin,
+  mockedUser,
+  mockedUserLogin,
+} from "../../mocks/login.mocks";
+import { mockedAnswerRequest } from "../../mocks/answers.mocks";
 
 describe("Create Answers tests", () => {
   const answersRepository: Repository<Answer> =
@@ -26,49 +34,29 @@ describe("Create Answers tests", () => {
 
     admUserId = await request(app)
       .post("/users")
-      .send({
-        email: "useradm@mail.com",
-        password: "Teste1234%",
-        name: "Usuário adm",
-        bio: "Dev Front-end",
-        isAdm: true,
-      })
+      .send(mockedAdmin)
       .then((res) => res.body.id);
 
     normalUserId = await request(app)
       .post("/users")
-      .send({
-        email: "user@mail.com",
-        password: "Teste1234%",
-        name: "Usuário",
-        bio: "Dev Front-end",
-        isAdm: false,
-      })
+      .send(mockedUser)
       .then((res) => res.body.id);
 
     token = await request(app)
       .post("/login")
-      .send({
-        email: "user@mail.com",
-        password: "Teste1234%",
-      })
+      .send(mockedUserLogin)
       .then((res) => res.body.token);
 
     tokenAdm = await request(app)
       .post("/login")
-      .send({
-        email: "useradm@mail.com",
-        password: "Teste1234%",
-      })
+      .send(mockedAdminLogin)
       .then((res) => res.body.token);
 
     questionId = await request(app)
       .post("/questions")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        title: "Question of test",
-        description: "The best of tests of answers",
-        tech: "Jest",
+        ...mockedQuestionRequest,
         userId: admUserId,
       })
       .then((res) => res.body.id);
@@ -83,7 +71,7 @@ describe("Create Answers tests", () => {
       .post("/answers")
       .set("Authorization", `Bearer ${tokenAdm}`)
       .send({
-        description: "The best test of Answers",
+        ...mockedAnswerRequest,
         questionId,
         userId: admUserId,
       });
@@ -104,11 +92,13 @@ describe("Create Answers tests", () => {
   });
 
   it("POST/answers - Should not be able to create answer without authentication", async () => {
-    const response = await request(app).post("/answers").send({
-      description: "The best test of Answers",
-      questionId,
-      userId: admUserId,
-    });
+    const response = await request(app)
+      .post("/answers")
+      .send({
+        ...mockedAnswerRequest,
+        questionId,
+        userId: admUserId,
+      });
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);
@@ -119,7 +109,7 @@ describe("Create Answers tests", () => {
       .post("/answers")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        description: "The best test of Answers",
+        ...mockedAnswerRequest,
         questionId,
         userId: normalUserId,
       });

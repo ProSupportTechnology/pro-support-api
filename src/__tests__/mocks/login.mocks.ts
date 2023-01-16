@@ -8,8 +8,8 @@ const mockedAdmin: iUserRequest = {
 };
 
 const mockedUserLogin: iUserLogin = {
-  email: "joana@mail.com",
-  password: "123456",
+  email: "Gasperboy@mail.com",
+  password: "ghostnever",
 };
 
 const mockedAdminLogin: iUserLogin = {
