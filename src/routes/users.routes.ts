@@ -51,7 +51,6 @@ usersRoutes.patch(
   "/:id",
   ensureInputIsUuidMiddleware,
   ensureAuthMiddleware,
-  ensureDataValidationMiddleware(userUpdateSchema),
   ensureValidRequestInputMiddleware,
   updateUserController
 );
