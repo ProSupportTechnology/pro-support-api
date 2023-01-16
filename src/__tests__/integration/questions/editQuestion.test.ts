@@ -55,4 +55,11 @@ describe("test", () => {
     expect(questionUpdated.body[0].title).toEqual("CSS");
     expect(questionUpdated.body[0].description).toEqual("Testando descrição");
   });
+
+  it("PATCH /questions/:id - Must not be able to edit a question without authentication", async () => {
+    const response = await request(app).post("/questions").send(mockedQuestion);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
+  });
 });
