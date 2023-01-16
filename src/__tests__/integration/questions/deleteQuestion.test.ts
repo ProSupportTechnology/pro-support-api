@@ -77,5 +77,3 @@ describe("Delete Questions tests", () => {
     expect(response.body).toHaveProperty("message");
   });
 });
-
-// yarn test src/__tests__/integration/questions/deleteQuestion.test.ts

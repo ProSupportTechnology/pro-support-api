@@ -47,8 +47,6 @@ describe("List Questions tests", () => {
       .get("/questions")
       .set("Authorization", `Bearer ${userToken}`);
 
-    console.log(questions);
-
     expect(questions.status).toBe(200);
     expect(questions.body[0]).toHaveProperty("id");
     expect(questions.body[0]).toHaveProperty("title");
