@@ -57,7 +57,7 @@ describe("List Questions tests", () => {
     expect(questions.body).toHaveLength(1);
   });
 
-  it("GET /questions - Should not be able to list answers without authorization token", async () => {
+  it("GET /questions - Should not be able to list questions without authorization token", async () => {
     const questions = await request(app).get("/questions");
 
     expect(questions.status).toBe(401);

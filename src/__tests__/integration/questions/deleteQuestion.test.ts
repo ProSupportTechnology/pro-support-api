@@ -7,8 +7,6 @@ import { questionRequest } from "../../mocks/questions.mocks";
 import { mockedUserLogin, mockedUserRequest } from "../../mocks/users.mocks";
 
 describe("Delete Questions tests", () => {
-  const questionsRepository: Repository<Question> =
-    AppDataSource.getRepository(Question);
   let conn: DataSource;
   let userId: string;
   let userToken: string;
