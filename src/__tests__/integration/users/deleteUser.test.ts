@@ -76,10 +76,7 @@ describe("/users", () => {
       .delete(`/users/${UserTobeDeleted.body[0].id}`)
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
-    console.log(UserTobeDeleted.body);
-
     expect(response.status).toBe(204);
-    // expect(findUser.body[0].deletedAt).toBe(true);
   });
 
   test("DELETE /users/:id -  should not be able to delete user with invalid id", async () => {
@@ -92,7 +89,7 @@ describe("/users", () => {
     const response = await request(app)
       .delete(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`)
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(404);
     expect(response.body).toHaveProperty("message");
   });
 });
