@@ -67,4 +67,15 @@ describe("Delete Questions tests", () => {
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty("message");
   });
+
+  it("DELETE /questions/:id -  should not be able to delete questions with id other than type uuid", async () => {
+    await request(app).post("/users").send(userId);
+    const response = await request(app)
+      .delete(`/questions/13146286`)
+      .set("Authorization", `Bearer ${userToken}`);
+    expect(response.status).toBe(406);
+    expect(response.body).toHaveProperty("message");
+  });
 });
+
+// yarn test src/__tests__/integration/questions/deleteQuestion.test.ts
