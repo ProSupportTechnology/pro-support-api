@@ -1,15 +1,15 @@
-import request from "supertest";
 import { DataSource } from "typeorm";
-import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
+import request from "supertest";
+import { app } from "../../../app";
+import { mockedUserLogin, mockedUserRequest } from "../../mocks/users.mocks";
+import { questionRequest } from "../../mocks/questions.mocks";
 
 describe("List Questions tests", () => {
   let conn: DataSource;
   let userId: string;
-  let admId: string;
   let userToken: string;
-  let admToken: string;
-  let questionId: string;
+  let question: string;
 
   beforeAll(async () => {
     await AppDataSource.initialize()
@@ -22,50 +22,19 @@ describe("List Questions tests", () => {
 
     userId = await request(app)
       .post("/users")
-      .send({
-        email: "user@gmail.com",
-        password: "Teste123!",
-        name: "User",
-        bio: "Dev Front-end",
-      })
-      .then((res) => res.body.id);
+      .send(mockedUserRequest)
 
-    admId = await request(app)
-      .post("/users")
-      .send({
-        email: "admin@prodsupport.com",
-        password: "Teste123!",
-        name: "admin",
-        bio: "Dev FullStack",
-        isAdm: true,
-      })
       .then((res) => res.body.id);
-
-    admToken = await request(app)
-      .post("/login")
-      .send({
-        email: "user@gmail.com",
-        password: "Teste123!",
-      })
-      .then((res) => res.body.token);
 
     userToken = await request(app)
       .post("/login")
-      .send({
-        email: "user@gmail.com",
-        password: "Teste123!",
-      })
+      .send(mockedUserLogin)
       .then((res) => res.body.token);
 
-    questionId = await request(app)
+    question = await request(app)
       .post("/questions")
-      .set("Authorization", `Bearer ${admToken}`)
-      .send({
-        title: "Nu Kenzie",
-        description: "Como tipar a resposta do axios corretamente?",
-        tech: "React",
-        userId: admId,
-      })
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({ ...questionRequest, userId: userId })
       .then((res) => res.body.id);
   });
 
@@ -76,7 +45,9 @@ describe("List Questions tests", () => {
   it("GET /questions - Should be able to list all questions", async () => {
     const questions = await request(app)
       .get("/questions")
-      .set("Authorization", `Bearer ${admToken}`);
+      .set("Authorization", `Bearer ${userToken}`);
+
+    console.log(questions);
 
     expect(questions.status).toBe(200);
     expect(questions.body[0]).toHaveProperty("id");
@@ -96,3 +67,4 @@ describe("List Questions tests", () => {
     expect(questions.body).not.toHaveProperty("id");
   });
 });
+// yarn test src/__tests__/integration/questions/listQuestions.test.ts
