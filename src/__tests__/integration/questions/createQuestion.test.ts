@@ -3,7 +3,7 @@ import { DataSource } from "typeorm";
 import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
 import { mockedAdmin, mockedAdminLogin } from "../../mocks/login.mocks";
-import { mockedQuestion } from "../../mocks/questions.mocks";
+import { questionRequest } from "../../mocks/questions.mocks";
 
 describe("test", () => {
   let connection: DataSource;
@@ -31,7 +31,7 @@ describe("test", () => {
 
     const response = await request(app)
       .post("/questions")
-      .send(mockedQuestion)
+      .send(questionRequest)
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
     expect(response.body).toHaveProperty("id");
@@ -45,7 +45,9 @@ describe("test", () => {
   });
 
   it("POST /questions - should not be able to create a question without authentication", async () => {
-    const response = await request(app).post("/questions").send(mockedQuestion);
+    const response = await request(app)
+      .post("/questions")
+      .send(questionRequest);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);
