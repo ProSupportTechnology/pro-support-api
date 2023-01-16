@@ -43,4 +43,11 @@ describe("test", () => {
     expect(response.body).toHaveProperty("user");
     expect(response.status).toBe(201);
   });
+
+  it("POST /questions - should not be able to create a question without authentication", async () => {
+    const response = await request(app).post("/questions").send(mockedQuestion);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
+  });
 });
