@@ -10,7 +10,10 @@ import {
   mockedUser,
   mockedUserLogin,
 } from "../../mocks/login.mocks";
-import { mockedAnswerRequest } from "../../mocks/answers.mocks";
+import {
+  mockedAnswerRequest,
+  mockedInvalidAnswerRequest,
+} from "../../mocks/answers.mocks";
 
 describe("Create Answers tests", () => {
   const answersRepository: Repository<Answer> =
@@ -78,7 +81,7 @@ describe("Create Answers tests", () => {
 
     const answers = await answersRepository.find();
 
-    expect(answers.length).toBe(1);
+    expect(answers).toHaveLength(1);
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("question");
@@ -117,5 +120,20 @@ describe("Create Answers tests", () => {
     expect(response.body).toHaveProperty("message");
     expect(response.body.message).toBe("Missing admin authorization");
     expect(response.status).toBe(403);
+  });
+
+  it("POST/answers - Should not be able to create answer | Invalid Body", async () => {
+    await answersRepository.clear();
+
+    const response = await request(app)
+      .post("/answers")
+      .set("Authorization", `Bearer ${tokenAdm}`)
+      .send(mockedInvalidAnswerRequest);
+
+    const answers = await answersRepository.find();
+
+    expect(answers).toHaveLength(0);
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty("message");
   });
 });

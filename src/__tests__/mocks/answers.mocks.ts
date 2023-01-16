@@ -5,3 +5,9 @@ export const mockedAnswerRequest: iAnswerRequest = {
   questionId: "",
   userId: "",
 };
+
+export const mockedInvalidAnswerRequest = {
+  description: { chave: "Test description" },
+  questionId: 2,
+  userId: 343,
+};
