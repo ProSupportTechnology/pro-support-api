@@ -1,7 +1,7 @@
 import { iQuestionRequest } from "../../interfaces/questions.interfaces";
 
 export const mockedQuestion: iQuestionRequest = {
-  title: "Testando",
+  title: "Listas em HTML",
   tech: "HTML",
-  description: "Testando descrição",
+  description: "Qual a tag de listas ordenadas no HTML?",
 };

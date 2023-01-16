@@ -19,7 +19,6 @@ describe("test", () => {
       });
 
     await request(app).post("/users").send(mockedAdmin);
-    await request(app).post("/questions").send(mockedQuestion);
   });
 
   afterAll(async () => {
@@ -27,7 +26,10 @@ describe("test", () => {
   });
 
   it("PATCH /questions/:id - Must be able to edit a question", async () => {
-    const newValues = { title: "CSS", description: "Testando descrição" };
+    const newValues = {
+      tech: "CSS",
+      description: "Como atribuir uma classe para as <li>?",
+    };
 
     const adminLoginResponse = await request(app)
       .post("/login")
@@ -52,8 +54,10 @@ describe("test", () => {
       .set("Authorization", token);
 
     expect(response.status).toBe(200);
-    expect(questionUpdated.body[0].title).toEqual("CSS");
-    expect(questionUpdated.body[0].description).toEqual("Testando descrição");
+    expect(questionUpdated.body[0].tech).toEqual("CSS");
+    expect(questionUpdated.body[0].description).toEqual(
+      "Como atribuir uma classe para as <li>?"
+    );
   });
 
   it("PATCH /questions/:id - Must not be able to edit a question without authentication", async () => {
