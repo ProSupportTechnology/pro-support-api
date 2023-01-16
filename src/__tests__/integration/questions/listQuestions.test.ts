@@ -67,4 +67,3 @@ describe("List Questions tests", () => {
     expect(questions.body).not.toHaveProperty("id");
   });
 });
-// yarn test src/__tests__/integration/questions/listQuestions.test.ts

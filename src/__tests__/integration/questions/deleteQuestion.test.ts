@@ -61,13 +61,10 @@ describe("Delete Questions tests", () => {
   });
   it("DELETE /questions/:id -  should not be able to delete questions with invalid id", async () => {
     await request(app).post("/users").send(userId);
-    const adminLoginResponse = await request(app)
-      .post("/login")
-      .send(userToken);
     const response = await request(app)
       .delete(`/questions/13970660-5dbe-423a-9a9d-5c23b37943cf`)
-      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
-    expect(response.status).toBe(401);
+      .set("Authorization", `Bearer ${userToken}`);
+    expect(response.status).toBe(404);
     expect(response.body).toHaveProperty("message");
   });
 });
