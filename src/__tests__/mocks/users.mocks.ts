@@ -1,39 +1,34 @@
-<<<<<<< HEAD
-import { iUserRequest, iUserResponse } from "../../interfaces/users.interfaces";
-=======
 import {
-  iUser,
   iUserLogin,
   iUserRequest,
   iUserResponse,
 } from "../../interfaces/users.interfaces";
->>>>>>> 24ce979dbde208eeaa1e79aa209bfc7999aa649c
 
-const mockedUserRequest: iUserRequest = {
+export const mockedUserRequest: iUserRequest = {
   name: "gaspar",
   email: "gasparzinho@ghost.com",
   password: "ghostbuster4ever",
   isAdm: false,
 };
 
-const mockedUserAdmRequest: iUserRequest = {
+export const mockedUserAdmRequest: iUserRequest = {
   name: "adm",
   email: "adm@adm.com",
   password: "ghostbuster4ever",
   isAdm: true,
 };
 
-const mockedUserLogin: iUserLogin = {
+export const mockedUserLogin: iUserLogin = {
   email: "gasparzinho@ghost.com",
   password: "ghostbuster4ever",
 };
 
-const mockedAdmLogin: iUserLogin = {
+export const mockedAdmLogin: iUserLogin = {
   email: "adm@adm.com",
   password: "ghostbuster4ever",
 };
 
-const mockedUserSuccessResponse: Omit<
+export const mockedUserSuccessResponse: Omit<
   iUserResponse,
   "id" | "image" | "createdAt" | "updatedAt"
 > = {
@@ -43,31 +38,22 @@ const mockedUserSuccessResponse: Omit<
   isAdm: true,
 };
 
-const mockedUserResponse: Omit<iUserRequest, "password"> = {
+export const mockedUserResponse: Omit<iUserRequest, "password"> = {
   name: "gasparzinho",
   email: "gasparzinho@ghost.com",
 };
 
-const mockedUserInvalidBodyRequest: Omit<iUserRequest, "password" | "email"> = {
+export const mockedUserInvalidBodyRequest: Omit<
+  iUserRequest,
+  "password" | "email"
+> = {
   name: "gasparzinho",
 };
 
-const mockedUserInvalidBodyResponse = {
+export const mockedUserInvalidBodyResponse = {
   error: ["email is a required field", "password is a required field"],
 };
 
-const mockedUserUniqueEmailResponse = {
+export const mockedUserUniqueEmailResponse = {
   message: "User already exists",
-};
-
-export {
-  mockedUserRequest,
-  mockedUserResponse,
-  mockedUserSuccessResponse,
-  mockedUserInvalidBodyRequest,
-  mockedUserInvalidBodyResponse,
-  mockedUserUniqueEmailResponse,
-  mockedUserAdmRequest,
-  mockedAdmLogin,
-  mockedUserLogin,
 };

@@ -2,11 +2,7 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import request from "supertest";
 import { app } from "../../../app";
-import {
-  mockedAdmin,
-  mockedAdminLogin,
-  mockedUser,
-} from "../../mocks/login.mocks";
+import { mockedAdmLogin, mockedUserAdmRequest } from "../../mocks/users.mocks";
 
 describe("/users", () => {
   let connection: DataSource;
@@ -20,7 +16,7 @@ describe("/users", () => {
         console.error("Error during Data Source initialization", err);
       });
 
-    await request(app).post("/users").send(mockedAdmin);
+    await request(app).post("/users").send(mockedUserAdmRequest);
   });
 
   afterAll(async () => {
@@ -30,7 +26,7 @@ describe("/users", () => {
   test("PATCH /users/:id -  should not be able to update user without authentication", async () => {
     const adminLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdminLogin);
+      .send(mockedAdmLogin);
     const userTobeUpdate = await request(app)
       .get("/users")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
@@ -47,13 +43,8 @@ describe("/users", () => {
 
     const admingLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdminLogin);
+      .send(mockedAdmLogin);
     const token = `Bearer ${admingLoginResponse.body.token}`;
-
-    const userTobeUpdateRequest = await request(app)
-      .get("/users")
-      .set("Authorization", token);
-    const userTobeUpdateId = userTobeUpdateRequest.body[0].id;
 
     const response = await request(app)
       .patch(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`)
@@ -69,15 +60,13 @@ describe("/users", () => {
 
     const admingLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdminLogin);
+      .send(mockedAdmLogin);
     const token = `Bearer ${admingLoginResponse.body.token}`;
 
     const userTobeUpdateRequest = await request(app)
       .get("/users")
       .set("Authorization", token);
     const userTobeUpdateId = userTobeUpdateRequest.body[0].id;
-
-    console.log(userTobeUpdateRequest);
 
     const response = await request(app)
       .patch(`/users/${userTobeUpdateId}`)
@@ -92,7 +81,7 @@ describe("/users", () => {
 
     const admingLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdminLogin);
+      .send(mockedAdmLogin);
     const token = `Bearer ${admingLoginResponse.body.token}`;
 
     const userTobeUpdateRequest = await request(app)
