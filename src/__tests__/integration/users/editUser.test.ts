@@ -2,7 +2,7 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import request from "supertest";
 import { app } from "../../../app";
-import { mockedAdmLogin, mockedUserAdmRequest } from "../../mocks/users.mocks";
+import { mockedAdminLogin, mockedAdmin } from "../../mocks/login.mocks";
 
 describe("/users", () => {
   let connection: DataSource;
@@ -16,7 +16,7 @@ describe("/users", () => {
         console.error("Error during Data Source initialization", err);
       });
 
-    await request(app).post("/users").send(mockedUserAdmRequest);
+    await request(app).post("/users").send(mockedAdmin);
   });
 
   afterAll(async () => {
@@ -26,7 +26,7 @@ describe("/users", () => {
   test("PATCH /users/:id -  should not be able to update user without authentication", async () => {
     const adminLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdmLogin);
+      .send(mockedAdminLogin);
     const userTobeUpdate = await request(app)
       .get("/users")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
@@ -43,7 +43,7 @@ describe("/users", () => {
 
     const admingLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdmLogin);
+      .send(mockedAdminLogin);
     const token = `Bearer ${admingLoginResponse.body.token}`;
 
     const response = await request(app)
@@ -60,7 +60,7 @@ describe("/users", () => {
 
     const admingLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdmLogin);
+      .send(mockedAdminLogin);
     const token = `Bearer ${admingLoginResponse.body.token}`;
 
     const userTobeUpdateRequest = await request(app)
@@ -81,7 +81,7 @@ describe("/users", () => {
 
     const admingLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdmLogin);
+      .send(mockedAdminLogin);
     const token = `Bearer ${admingLoginResponse.body.token}`;
 
     const userTobeUpdateRequest = await request(app)
