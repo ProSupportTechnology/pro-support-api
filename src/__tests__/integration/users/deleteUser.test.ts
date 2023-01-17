@@ -3,10 +3,10 @@ import { AppDataSource } from "../../../data-source";
 import request from "supertest";
 import { app } from "../../../app";
 import {
-  mockedAdmLogin,
-  mockedUserAdmRequest,
+  mockedAdmin,
+  mockedAdminLogin,
   mockedUserLogin,
-} from "../../mocks/users.mocks";
+} from "../../mocks/login.mocks";
 
 describe("/users", () => {
   let connection: DataSource;
@@ -20,7 +20,7 @@ describe("/users", () => {
         console.error("Error during Data Source initialization", err);
       });
 
-    await request(app).post("/users").send(mockedUserAdmRequest);
+    await request(app).post("/users").send(mockedAdmin);
   });
 
   afterAll(async () => {
@@ -30,7 +30,7 @@ describe("/users", () => {
   test("DELETE /users/:id -  should not be able to delete user without authentication", async () => {
     const adminLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdmLogin);
+      .send(mockedAdminLogin);
 
     const UserTobeDeleted = await request(app)
       .get("/users")
@@ -50,7 +50,7 @@ describe("/users", () => {
       .send(mockedUserLogin);
     const adminLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdmLogin);
+      .send(mockedAdminLogin);
     const UserTobeDeleted = await request(app)
       .get("/users")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
@@ -66,7 +66,7 @@ describe("/users", () => {
   test("DELETE /users/:id -  Must be able to soft delete user", async () => {
     const adminLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdmLogin);
+      .send(mockedAdminLogin);
 
     const UserTobeDeleted = await request(app)
       .get("/users")
@@ -80,11 +80,11 @@ describe("/users", () => {
   });
 
   test("DELETE /users/:id -  should not be able to delete user with invalid id", async () => {
-    await request(app).post("/users").send(mockedUserAdmRequest);
+    await request(app).post("/users").send(mockedAdmin);
 
     const adminLoginResponse = await request(app)
       .post("/login")
-      .send(mockedAdmLogin);
+      .send(mockedAdminLogin);
 
     const response = await request(app)
       .delete(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`)

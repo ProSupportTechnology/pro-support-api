@@ -2,8 +2,8 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import request from "supertest";
 import { app } from "../../../app";
-import { mockedUserLogin, mockedUserRequest } from "../../mocks/users.mocks";
-import { questionRequest } from "../../mocks/questions.mocks";
+import { mockedQuestionRequest } from "../../mocks/questions.mocks";
+import { mockedUser, mockedUserLogin } from "../../mocks/login.mocks";
 
 describe("List Questions tests", () => {
   let conn: DataSource;
@@ -22,7 +22,7 @@ describe("List Questions tests", () => {
 
     userId = await request(app)
       .post("/users")
-      .send(mockedUserRequest)
+      .send(mockedUser)
 
       .then((res) => res.body.id);
 
@@ -34,7 +34,7 @@ describe("List Questions tests", () => {
     question = await request(app)
       .post("/questions")
       .set("Authorization", `Bearer ${userToken}`)
-      .send({ ...questionRequest, userId: userId })
+      .send({ ...mockedQuestionRequest, userId: userId })
       .then((res) => res.body.id);
   });
 
