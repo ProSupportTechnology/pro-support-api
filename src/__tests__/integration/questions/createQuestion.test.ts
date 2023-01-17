@@ -44,6 +44,25 @@ describe("test", () => {
     expect(response.status).toBe(201);
   });
 
+  it("POST /questions - it should not be possible to create a question with incorrect body", async () => {
+    const questionIncorrect = {
+      title: "Nu Kenzie",
+      description: "Como tipar a resposta do axios corretamente?",
+    };
+
+    const adminLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedAdminLogin);
+
+    const response = await request(app)
+      .post("/questions")
+      .send(questionIncorrect)
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(400);
+  });
+
   it("POST /questions - should not be able to create a question without authentication", async () => {
     const response = await request(app)
       .post("/questions")
