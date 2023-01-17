@@ -73,6 +73,24 @@ describe("test", () => {
     expect(response.body).toHaveProperty("message");
   });
 
+  test("PATCH /questions/:id - should not be able to update question with invalid id", async () => {
+    const newValues = { title: "Test", tech: "CSS" };
+
+    const admingLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedAdminLogin);
+
+    const token = `Bearer ${admingLoginResponse.body.token}`;
+
+    const response = await request(app)
+      .patch(`/questions/13970660-5dbe-423a-9a9d-5c23b37943cf`)
+      .set("Authorization", token)
+      .send(newValues);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
+  });
+
   it("PATCH /questions/:id - Must not be able to edit a question without authentication", async () => {
     const response = await request(app)
       .post("/questions")
