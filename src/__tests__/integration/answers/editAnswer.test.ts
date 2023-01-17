@@ -2,6 +2,9 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import request from "supertest";
 import { app } from "../../../app";
+import { mockedAdmin, mockedAdminLogin, mockedUser, mockedUserLogin } from "../../mocks/login.mocks";
+import { mockedAnswerRequest } from "../../mocks/answers.mocks";
+import { mockedQuestionRequest } from "../../mocks/questions.mocks";
 
 describe("/answers", () => {
   let conn: DataSource;
@@ -23,60 +26,36 @@ describe("/answers", () => {
 
     commonUserId = await request(app)
       .post("/users")
-      .send({
-        email: "user1@mail.com",
-        password: "Teste1234%",
-        name: "Usuário comum",
-        bio: "Dev Front-end",
-      })
+      .send(mockedUser)
       .then((res) => res.body.id);
 
     admUserId = await request(app)
       .post("/users")
-      .send({
-        email: "user@mail.com",
-        password: "Teste1234%",
-        name: "Usuário admin",
-        bio: "Dev Back-end",
-        isAdm: true,
-      })
+      .send(mockedAdmin)
       .then((res) => res.body.id);
 
     admUserToken = await request(app)
       .post("/login")
-      .send({
-        email: "user@mail.com",
-        password: "Teste1234%",
-      })
+      .send(mockedAdminLogin)
       .then((res) => res.body.token);
 
     commonUserToken = await request(app)
       .post("/login")
-      .send({
-        email: "user1@mail.com",
-        password: "Teste1234%",
-      })
+      .send(mockedUserLogin)
       .then((res) => res.body.token);
 
     questionId = await request(app)
       .post("/questions")
       .set("Authorization", `Bearer ${admUserToken}`)
-      .send({
-        title: "Question of test",
-        description: "The best of tests of answers",
-        tech: "Jest",
-        userId: admUserId,
-      })
+      .send({ ...mockedQuestionRequest, userId: admUserId })
       .then((res) => res.body.id);
 
+    mockedAnswerRequest.questionId = questionId;
+    mockedAnswerRequest.userId = admUserId;
     answerId = await request(app)
       .post("/answers")
       .set("Authorization", `Bearer ${admUserToken}`)
-      .send({
-        description: "The best test of Answers",
-        questionId,
-        userId: admUserId,
-      })
+      .send(mockedAnswerRequest)
       .then((res) => res.body.id);
   });
 
@@ -89,7 +68,7 @@ describe("/answers", () => {
     const answers = await request(app)
       .patch(`/answers/${answerId}`)
       .set("Authorization", `Bearer ${admUserToken}`)
-      .send({ description: newDescription, questionId, userId: admUserId });
+      .send({ ...mockedAnswerRequest, description: newDescription });
 
     expect(answers.status).toBe(200);
     expect(answers.body).toHaveProperty("id");
@@ -114,7 +93,7 @@ describe("/answers", () => {
     const answers = await request(app)
       .patch(`/answers/12345678abc`)
       .set("Authorization", `Bearer ${admUserToken}`)
-      .send({ description: "Not possible", questionId, userId: "user id test" });
+      .send(mockedAnswerRequest);
 
     expect(answers.status).toBe(406);
     expect(answers.body).toHaveProperty("message");
@@ -125,7 +104,7 @@ describe("/answers", () => {
     const answers = await request(app)
       .patch(`/answers/${answerId}`)
       .set("Authorization", `Bearer ${admUserToken}`)
-      .send({ description: "Not possible", questionId, userId: "user id test" });
+      .send({ ...mockedAnswerRequest, userId: "user id test" });
 
     expect(answers.status).toBe(404);
     expect(answers.body).toHaveProperty("message");
@@ -136,7 +115,7 @@ describe("/answers", () => {
     const answers = await request(app)
       .patch(`/answers/${answerId}`)
       .set("Authorization", `Bearer ${admUserToken}`)
-      .send({ description: "Not possible", questionId: "question id", userId: admUserId });
+      .send({ ...mockedAnswerRequest, questionId: "question id" });
 
     expect(answers.status).toBe(404);
     expect(answers.body).toHaveProperty("message");
@@ -144,9 +123,7 @@ describe("/answers", () => {
   });
 
   it("PATCH /answers - Should not be able to edit answers without authorization token", async () => {
-    const answers = await request(app)
-      .patch(`/answers/${answerId}`)
-      .send({ description: "new Description", questionId, userId: admUserId });
+    const answers = await request(app).patch(`/answers/${answerId}`).send(mockedAnswerRequest);
 
     expect(answers.status).toBe(401);
     expect(answers.body).toHaveProperty("message");
@@ -157,7 +134,7 @@ describe("/answers", () => {
     const answers = await request(app)
       .patch(`/answers/${answerId}`)
       .set("Authorization", `Bearer ${commonUserToken}`)
-      .send({ description: "new Description", questionId, userId: admUserId });
+      .send(mockedAnswerRequest);
 
     expect(answers.status).toBe(403);
     expect(answers.body).toHaveProperty("message");

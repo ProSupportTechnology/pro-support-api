@@ -2,6 +2,9 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import request from "supertest";
 import { app } from "../../../app";
+import { mockedAdmin, mockedAdminLogin, mockedUser, mockedUserLogin } from "../../mocks/login.mocks";
+import { mockedQuestionRequest } from "../../mocks/questions.mocks";
+import { mockedAnswerRequest } from "../../mocks/answers.mocks";
 
 describe("/answers", () => {
   let conn: DataSource;
@@ -22,57 +25,36 @@ describe("/answers", () => {
 
     commonUserId = await request(app)
       .post("/users")
-      .send({
-        email: "user1@mail.com",
-        password: "Teste1234%",
-        name: "Usuário comum",
-        bio: "Dev Front-end",
-      })
+      .send(mockedUser)
       .then((res) => res.body.id);
 
     admUserId = await request(app)
       .post("/users")
-      .send({
-        email: "user@mail.com",
-        password: "Teste1234%",
-        name: "Usuário admin",
-        bio: "Dev Back-end",
-        isAdm: true,
-      })
+      .send(mockedAdmin)
       .then((res) => res.body.id);
 
     admUserToken = await request(app)
       .post("/login")
-      .send({
-        email: "user@mail.com",
-        password: "Teste1234%",
-      })
+      .send(mockedAdminLogin)
       .then((res) => res.body.token);
 
     commonUserToken = await request(app)
       .post("/login")
-      .send({
-        email: "user1@mail.com",
-        password: "Teste1234%",
-      })
+      .send(mockedUserLogin)
       .then((res) => res.body.token);
 
     questionId = await request(app)
       .post("/questions")
       .set("Authorization", `Bearer ${admUserToken}`)
-      .send({
-        title: "Question of test",
-        description: "The best of tests of answers",
-        tech: "Jest",
-        userId: admUserId,
-      })
+      .send({ ...mockedQuestionRequest, userId: admUserId })
       .then((res) => res.body.id);
 
-    await request(app).post("/answers").set("Authorization", `Bearer ${admUserToken}`).send({
-      description: "The best test of Answers",
-      questionId,
-      userId: admUserId,
-    });
+    mockedAnswerRequest.questionId = questionId;
+    mockedAnswerRequest.userId = admUserId;
+    await request(app)
+      .post("/answers")
+      .set("Authorization", `Bearer ${admUserToken}`)
+      .send(mockedAnswerRequest);
   });
 
   afterAll(async () => {
