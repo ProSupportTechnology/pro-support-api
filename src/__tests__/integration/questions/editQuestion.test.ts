@@ -2,7 +2,11 @@ import request from "supertest";
 import { DataSource } from "typeorm";
 import { app } from "../../../app";
 import { AppDataSource } from "../../../data-source";
-import { mockedAdmin, mockedAdminLogin } from "../../mocks/login.mocks";
+import {
+  mockedAdmin,
+  mockedAdminLogin,
+  mockedUser,
+} from "../../mocks/login.mocks";
 import { questionRequest } from "../../mocks/questions.mocks";
 
 describe("test", () => {
@@ -18,6 +22,7 @@ describe("test", () => {
       });
 
     await request(app).post("/users").send(mockedAdmin);
+    await request(app).post("/users").send(mockedUser);
   });
 
   afterAll(async () => {
@@ -73,7 +78,7 @@ describe("test", () => {
     expect(response.body).toHaveProperty("message");
   });
 
-  test("PATCH /questions/:id - should not be able to update question with invalid id", async () => {
+  it("PATCH /questions/:id - should not be able to update question with invalid id", async () => {
     const newValues = { title: "Test", tech: "CSS" };
 
     const admingLoginResponse = await request(app)
