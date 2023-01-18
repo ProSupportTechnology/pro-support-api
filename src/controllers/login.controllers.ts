@@ -4,6 +4,6 @@ import { loginService } from "../services/login/login.service";
 
 export const loginController = async (req: Request, res: Response) => {
   const loginInformation: iUserLogin = req.body;
-  const token: string = await loginService(loginInformation);
-  return res.json({ token });
+  const data = await loginService(loginInformation);
+  return res.json(data);
 };
