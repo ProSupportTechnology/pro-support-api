@@ -36,6 +36,7 @@ const userUpdateSchema: SchemaOf<iUserUpdate> = yup.object().shape({
   email: yup.string().email().notRequired(),
   password: yup.string().notRequired(),
   bio: yup.string().notRequired(),
+  isAdm: yup.boolean().notRequired(),
   image: yup.string().notRequired(),
 });
 

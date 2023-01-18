@@ -8,9 +8,17 @@ import { userWithoutPasswordSchema } from "./user.schemas";
 
 export const questionSchema: SchemaOf<iQuestionRequest> = yup.object().shape({
   title: yup.string().required(),
-  description: yup.string().email().required(),
+  description: yup.string().required(),
   tech: yup.string().required(),
 });
+
+export const editQuestionSchema: SchemaOf<iQuestionRequest> = yup
+  .object()
+  .shape({
+    title: yup.string(),
+    description: yup.string(),
+    tech: yup.string(),
+  });
 
 export const questionReturnSchema: SchemaOf<iQuestionResponse> = yup
   .object()
