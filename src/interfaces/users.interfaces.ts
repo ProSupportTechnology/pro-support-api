@@ -21,11 +21,6 @@ export interface iUserUpdateReturn {
   image: string;
 }
 
-export interface iUserLogin {
-  email: string;
-  password: string;
-}
-
 export interface iUserResponse {
   id: string;
   email: string;
@@ -40,6 +35,11 @@ export interface iUserResponse {
 export interface iUserLogin {
   email: string;
   password: string;
+}
+
+export interface iUserLoginResponse {
+  token: string;
+  user: iUserResponse;
 }
 
 export interface iUser {
