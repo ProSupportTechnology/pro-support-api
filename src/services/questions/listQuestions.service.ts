@@ -4,7 +4,9 @@ import { iQuestionResponse } from "../../interfaces/questions.interfaces";
 
 export const listQuestionsService = async (): Promise<iQuestionResponse[]> => {
   const questionsRepository = AppDataSource.getRepository(Question);
-  const allQuestions = await questionsRepository.find();
+  const allQuestions = await questionsRepository.find({
+    relations: { user: true, answer: true },
+  });
 
   return allQuestions;
 };
