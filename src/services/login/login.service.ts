@@ -1,24 +1,22 @@
 import jwt from "jsonwebtoken";
-import { compare, hashSync } from "bcryptjs";
+import { compare } from "bcryptjs";
 import "dotenv/config";
-import { iUserLogin } from "../../interfaces/users.interfaces";
+import { iUserLogin, iUserLoginResponse } from "../../interfaces/users.interfaces";
 import { AppError } from "../../errors";
 import { User } from "../../entities/user.entity";
 import { AppDataSource } from "../../data-source";
+import { userWithoutPasswordSchema } from "../../schemas/user.schemas";
 
-export const loginService = async ({
-  email,
-  password,
-}: iUserLogin): Promise<string> => {
+export const loginService = async ({ email, password }: iUserLogin): Promise<iUserLoginResponse> => {
   const userRepository = AppDataSource.getRepository(User);
 
-  const user = await userRepository.findOneBy({
-    email: email,
-  });
-
-  if (!user) {
-    throw new AppError("User or password is invalid", 403);
-  }
+  const user = await userRepository
+    .findOneByOrFail({
+      email: email,
+    })
+    .catch(() => {
+      throw new AppError("User or password is invalid", 403);
+    });
 
   const passwordMatch = await compare(password, user.password);
 
@@ -37,5 +35,7 @@ export const loginService = async ({
     }
   );
 
-  return token;
+  const userWithoutPassword = await userWithoutPasswordSchema.validate(user, { stripUnknown: true });
+
+  return { token, user: userWithoutPassword };
 };
