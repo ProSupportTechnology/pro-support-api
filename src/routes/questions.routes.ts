@@ -4,14 +4,12 @@ import {
   createQuestionController,
   editQuestionController,
   listQuestionsController,
+  listQuestionsByUserController,
 } from "../controllers/question.controllers";
 import { ensureAuthMiddleware } from "../middlewares/ensure.authorization.middleware";
 import { ensureDataValidationMiddleware } from "../middlewares/ensureDataValidation.middleware";
 import { ensureInputIsUuidMiddleware } from "../middlewares/ensureInputIsUuid.middleware";
-import {
-  questionSchema,
-  editQuestionSchema,
-} from "../schemas/question.schemas";
+import { questionSchema, editQuestionSchema } from "../schemas/question.schemas";
 
 export const questionsRoutes = Router();
 
@@ -30,9 +28,5 @@ questionsRoutes.patch(
   editQuestionController
 );
 questionsRoutes.get("", ensureAuthMiddleware, listQuestionsController);
-questionsRoutes.delete(
-  "/:id",
-  ensureAuthMiddleware,
-  ensureInputIsUuidMiddleware,
-  deleteQuestionsController
-);
+questionsRoutes.delete("/:id", ensureAuthMiddleware, ensureInputIsUuidMiddleware, deleteQuestionsController);
+questionsRoutes.get("/users/:id", ensureAuthMiddleware, listQuestionsByUserController);
